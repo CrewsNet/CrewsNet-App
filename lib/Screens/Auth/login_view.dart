@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+
+import '../PageNotFound.dart';
+import 'signup_view.dart';
 // import 'package:mdi/mdi.dart';
 
 class LoginPage extends StatefulWidget {
@@ -245,6 +248,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                     ElevatedButton(
+
                       style: ButtonStyle(
                         minimumSize: MaterialStateProperty.all(Size(220, 44)),
                         shape: MaterialStateProperty.all(
@@ -255,7 +259,9 @@ class _LoginPageState extends State<LoginPage> {
                         backgroundColor: MaterialStateProperty.all(
                             Color.fromRGBO(71, 71, 71, 1)),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) =>PageNotFound(),));
+                      },
                       child: Center(
                         child: Container(
                           alignment: Alignment.center,
@@ -284,7 +290,9 @@ class _LoginPageState extends State<LoginPage> {
                             width: 5.0,
                           ),
                           GestureDetector(
-                            onTap: (){},
+                            onTap: (){
+                              Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) =>SignUpPage(),));
+                            },
                             child: Text(
                               "Create an Account",
                               style: TextStyle(
