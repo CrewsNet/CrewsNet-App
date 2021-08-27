@@ -58,7 +58,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Image.asset(
-                        "images/google.png",
+                        "assets/images/google.png",
                         height: 45,
                       ),
                       Text(
