@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
-class SignUpPage extends StatelessWidget {
+class Dashboard extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Text("SignUp"),
+      child: Center(child: Text("Dashboard")),
     );
   }
 }
