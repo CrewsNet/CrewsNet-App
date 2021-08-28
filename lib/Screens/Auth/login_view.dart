@@ -14,7 +14,7 @@ class _LoginPageState extends State<LoginPage> with InputValidationMixin {
   final messageController = TextEditingController();
   String email = "";
   String password = "";
-
+  bool agree = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,6 +24,7 @@ class _LoginPageState extends State<LoginPage> with InputValidationMixin {
         child: SingleChildScrollView(
           child: SizedBox(
             height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 25),
               child: Column(
@@ -150,6 +151,28 @@ class _LoginPageState extends State<LoginPage> with InputValidationMixin {
                     textAlign: TextAlign.center,
                     decoration: AuthTextFieldDecoration.copyWith(
                         hintText: "Enter your Password"),
+                  ),
+                  Row(
+                    children: [
+                      Checkbox(
+                        activeColor: Colors.blueGrey,
+                        value: agree,
+                        onChanged: (value) {
+                          setState(() {
+                            agree = !agree;
+                          });
+                        },
+                      ),
+                      Text(
+                        "Remember Me",
+                      ),
+                      SizedBox(width: MediaQuery.of(context).size.width/6,),
+                      GestureDetector(
+                        child: Text(
+                          "Forgot Password?",
+                        ),
+                      ),
+                    ],
                   ),
                   Align(
                     alignment: Alignment.center,
