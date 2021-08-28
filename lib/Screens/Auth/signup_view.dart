@@ -177,21 +177,28 @@ class _SignUpPageState extends State<SignUpPage> with InputValidationMixin {
                     decoration: AuthTextFieldDecoration.copyWith(
                         hintText: "Enter your Password"),
                   ),
-                  Row(
-                    children: [
-                      Checkbox(
-                        activeColor: Colors.blueGrey,
-                        value: agree,
-                        onChanged: (value) {
-                          setState(() {
-                            agree = !agree;
-                          });
-                        },
-                      ),
-                      Text(
-                        "I have read and accept terms and conditions",
-                      ),
-                    ],
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Checkbox(
+                          activeColor: Colors.blueGrey,
+                          value: agree,
+                          onChanged: (value) {
+                            setState(() {
+                              agree = !agree;
+                            });
+                          },
+                        ),
+                        Text(
+                          "I have read and accept terms and conditions",
+                          style: TextStyle(color: Colors.white,fontSize: 13.0),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ],
+                    ),
                   ),
                   Align(
                     alignment: Alignment.center,
