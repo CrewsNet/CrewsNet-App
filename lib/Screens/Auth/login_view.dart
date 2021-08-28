@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:crews_net_app/constants.dart';
-import 'package:crews_net_app/components/rounded_button.dart';
+import 'package:crews_net_app/components/Auth/rounded_button.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class LoginPage extends StatefulWidget {
@@ -29,14 +29,14 @@ class _LoginPageState extends State<LoginPage> {
               children: [
                 Text(
                   "CrewsNET",
-                  style: CMainHeading,
+                  style: TextStyle(fontSize: 40.0, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
                   height: 10,
                 ),
                 Text(
                   "Log In",
-                  style: CMainSubHeading,
+                  style: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
                   height: 10,
@@ -106,7 +106,9 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 Text(
                   "Email*",
-                  style: CTextStyle,
+                  style: TextStyle(
+                    fontSize: 15.0,
+                  ),
                 ),
                 TextField(
                   keyboardType: TextInputType.emailAddress,
@@ -114,14 +116,16 @@ class _LoginPageState extends State<LoginPage> {
                   onChanged: (value) {
                     email = value;
                   },
-                  decoration: CTextFieldDecoration,
+                  decoration: AuthTextFieldDecoration,
                 ),
                 SizedBox(
                   height: 10,
                 ),
                 Text(
                   "Password*",
-                  style: CTextStyle,
+                  style: TextStyle(
+                    fontSize: 15.0,
+                  ),
                 ),
                 TextField(
                   controller: messageController,
@@ -130,7 +134,7 @@ class _LoginPageState extends State<LoginPage> {
                   onChanged: (value) {
                     password = value;
                   },
-                  decoration: CTextFieldDecoration.copyWith(
+                  decoration: AuthTextFieldDecoration.copyWith(
                       hintText: "Enter your Password"),
                 ),
                 Align(
@@ -163,7 +167,7 @@ class _LoginPageState extends State<LoginPage> {
                   alignment: Alignment.center,
                   child: Text(
                     "©2021 CrewsNet All rights reserved.",
-                    style: CCopyrightStyle,
+                    style: TextStyle(fontSize: 10),
                   ),
                 ),
               ],
