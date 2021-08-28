@@ -1,9 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import '../PageNotFound.dart';
-import 'signup_view.dart';
-// import 'package:mdi/mdi.dart';
+import 'package:crews_net_app/constants.dart';
+import 'package:crews_net_app/components/rounded_button.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -11,301 +10,165 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  @override
-  bool checked = false;
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+  final messageController = TextEditingController();
+  String email = "";
+  String password = "";
 
+  @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: Stack(
-          children: [
-            // Background - Image
-            Container(
-              decoration: BoxDecoration(
-                // color: Color.fromRGBO(255, 255, 255, 0.2),
-                image: DecorationImage(
-                  image: AssetImage("assets/images/background-img.png"),
-                  colorFilter: new ColorFilter.mode(
-                      Color.fromRGBO(33, 33, 33, 0.4), BlendMode.dstATop),
-                  fit: BoxFit.cover,
+    return Scaffold(
+      backgroundColor: Colors.black12,
+      body: SingleChildScrollView(
+        child: SizedBox(
+          height: MediaQuery.of(context).size.height,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 25),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "CrewsNET",
+                  style: CMainHeading,
                 ),
-              ),
-            ),
-            SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: SizedBox(
-                  height: MediaQuery.of(context).size.height,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "CrewsNet",
-                        style: TextStyle(
-                          fontSize: 36.0,
-                          color: Colors.white,
-                          // fontFamily: 'Verdana',
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                      Text(
-                        "Login",
-                        style: TextStyle(
-                          // fontFamily: 'SFProDisplay',
-                          fontSize: 32.0,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                      Text(
-                        "Get connected with the world of projects",
-                        style: TextStyle(
-                          fontSize: 14.0,
-                          color: Colors.white,
-                          // fontFamily: 'SFProDisplay'
-                        ),
-                      ),
-                      Button(
-                        title: "Sign In with Google",
-                        imageUrl: "assets/images/google.png",
-                      ),
-                      Button(
-                        title: "Sign In with Github",
-                        imageUrl: "assets/images/GitHub-Icon.png",
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            width: 120,
-                            child: const Divider(
-                              color: Color.fromRGBO(196, 196, 196, 1),
-                            ),
-                          ),
-                          Text("or Log in with Email"),
-                          Container(
-                            width: 120,
-                            child: const Divider(
-                              color: Color.fromRGBO(196, 196, 196, 1),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Email",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 22.0,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                          CustomTextField(hintText: "Enter Your Email", controller: emailController),
-                          Text(
-                            "Password",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 22.0,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                         CustomTextField(controller: passwordController, hintText: "Enter Your Password")
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Checkbox(
-                            activeColor: Colors.blueGrey,
-                            value: checked,
-                            onChanged: (value) {
-                              setState(() {
-                                checked = !checked;
-                              });
-                            },
-                          ),
-                          Text(
-                            "Remember Me",
-                          ),
-                          const SizedBox(
-                            width: 100.0,
-                          ),
-                          Text(
-                            "Forget Password?",
-                          ),
-                        ],
-                      ),
-                      ElevatedButton(
-                        style: ButtonStyle(
-                          minimumSize: MaterialStateProperty.all(Size(220, 44)),
-                          shape: MaterialStateProperty.all(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30.0),
-                            ),
-                          ),
-                          backgroundColor: MaterialStateProperty.all(
-                              Color.fromRGBO(71, 71, 71, 1)),
-                        ),
-                        onPressed: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                            builder: (BuildContext context) => PageNotFound(),
-                          ));
-                        },
-                        child: Center(
-                          child: Container(
-                            alignment: Alignment.center,
-                            width: 300,
-                            child: Text(
-                              "Login",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 22.0,
-                              ),
-                            ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  "Log In",
+                  style: CMainSubHeading,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  "Get connected with the world of projects",
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: Color(0xFF323232),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        GestureDetector(
+                          onTap: () {},
+                          child: Image.asset(
+                            "assets/images/google.png",
+                            height: 45,
                           ),
                         ),
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "Not Registers Yet?",
-                                style: TextStyle(color: Colors.white, fontSize: 16.0),
-                              ),
-                              const SizedBox(
-                                width: 5.0,
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (BuildContext context) => SignUpPage(),
-                                  ));
-                                },
-                                child: Text(
-                                  "Create an Account",
-                                  style:
-                                      TextStyle(color: Colors.white, fontSize: 18.0),
-                                ),
-                              )
-                            ],
+                        GestureDetector(
+                          onTap: () {},
+                          child: Image.asset(
+                            "assets/images/GitHub-Icon.png",
+                            height: 45,
                           ),
-                          SizedBox(height: 5),
-                          Text(
-                            "©2021 CrewsNet All rights reserved.",
-                          )
-                        ],
-                      ),
-                    ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class CustomTextField extends StatelessWidget {
-  const CustomTextField({
-    Key? key,
-    required this.controller,
-    required this.hintText
-  });
-
-  final TextEditingController controller;
-  final String hintText;
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10.0),
-      child: Container(
-        alignment: Alignment.center,
-        width: 400,
-        height: 60,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(30.0),
-            shape: BoxShape.rectangle,
-            color: Color.fromRGBO(20, 20, 20, 1)),
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(
-            12.0,
-            8.0,
-            8.0,
-            8.0,
-          ),
-          child: TextFormField(
-            controller: controller,
-            onChanged: (value) {},
-            decoration: InputDecoration(
-              hintText: hintText,
-              contentPadding:
-                  EdgeInsets.all(10.0),
-              focusedBorder: OutlineInputBorder(
-                // borderRadius: BorderRadius.all(
-                //   Radius.circular(20.0),
-                // ),
-                borderSide: BorderSide(
-                  width: 3,
+                SizedBox(
+                  height: 10,
                 ),
-              ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Divider(
+                        color: Colors.white,
+                        thickness: 1.5,
+                      ),
+                    ),
+                    Text(
+                      " Log in with Email ",
+                      style: TextStyle(fontSize: 17.0),
+                    ),
+                    Expanded(
+                      child: Divider(
+                        color: Colors.white,
+                        thickness: 1.5,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  "Email*",
+                  style: CTextStyle,
+                ),
+                TextField(
+                  keyboardType: TextInputType.emailAddress,
+                  textAlign: TextAlign.center,
+                  onChanged: (value) {
+                    email = value;
+                  },
+                  decoration: CTextFieldDecoration,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  "Password*",
+                  style: CTextStyle,
+                ),
+                TextField(
+                  controller: messageController,
+                  obscureText: true,
+                  textAlign: TextAlign.center,
+                  onChanged: (value) {
+                    password = value;
+                  },
+                  decoration: CTextFieldDecoration.copyWith(
+                      hintText: "Enter your Password"),
+                ),
+                Align(
+                  alignment: Alignment.center,
+                  child: RoundedButton(
+                    color: Colors.blue,
+                    onPressed: () {
+                      Navigator.of(context).pushNamed('/dashboard');
+                    },
+                    text: "LOG IN",
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Don't have an account? ",
+                    ),
+                    GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(context, '/signup');
+                        },
+                        child: Text(
+                          "Sign Up",
+                          style: TextStyle(color: Colors.lightBlueAccent),
+                        )),
+                  ],
+                ),
+                Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    "©2021 CrewsNet All rights reserved.",
+                    style: CCopyrightStyle,
+                  ),
+                ),
+              ],
             ),
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class Button extends StatelessWidget {
-  final String title;
-  final String imageUrl;
-
-  const Button({Key? key, required this.title, required this.imageUrl});
-
-  @override
-  Widget build(BuildContext context) {
-    return ElevatedButton(
-      style: ButtonStyle(
-        minimumSize: MaterialStateProperty.all(Size(220, 44)),
-        shape: MaterialStateProperty.all(
-          RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30.0),
-          ),
-        ),
-        backgroundColor:
-            MaterialStateProperty.all(Color.fromRGBO(71, 71, 71, 1)),
-      ),
-      onPressed: () {},
-      child: Container(
-        alignment: Alignment.center,
-        width: 400,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Image.asset(
-              this.imageUrl,
-              width: 40,
-              height: 40,
-            ),
-            Text(
-              this.title,
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.w500,
-                fontSize: 18.0,
-              ),
-            ),
-          ],
         ),
       ),
     );

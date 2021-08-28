@@ -17,11 +17,10 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        backgroundColor: Colors.black12,
-        body: Padding(
+    return Scaffold(
+      backgroundColor: Colors.black12,
+      body: SingleChildScrollView(
+        child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 25),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -57,13 +56,19 @@ class _SignUpPageState extends State<SignUpPage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Image.asset(
-                        "assets/images/google.png",
-                        height: 45,
+                      GestureDetector(
+                        onTap: () {},
+                        child: Image.asset(
+                          "assets/images/google.png",
+                          height: 45,
+                        ),
                       ),
-                      Text(
-                        "SIGN UP WITH GOOGLE",
-                        style: TextStyle(fontSize: 20),
+                      GestureDetector(
+                        onTap: () {},
+                        child: Image.asset(
+                          "assets/images/GitHub-Icon.png",
+                          height: 45,
+                        ),
                       ),
                     ],
                   ),
@@ -143,19 +148,14 @@ class _SignUpPageState extends State<SignUpPage> {
               ),
               Row(
                 children: [
-                  Material(
-                    child: Checkbox(
-                      value: agree,
-                      onChanged: (value) {
-                        setState(() {
-                          if (agree == true) {
-                            agree = false;
-                          } else {
-                            agree = true;
-                          }
-                        });
-                      },
-                    ),
+                  Checkbox(
+                    activeColor: Colors.blueGrey,
+                    value: agree,
+                    onChanged: (value) {
+                      setState(() {
+                        agree = !agree;
+                      });
+                    },
                   ),
                   Text(
                     "I have read and accept terms and conditions",
@@ -165,14 +165,15 @@ class _SignUpPageState extends State<SignUpPage> {
               Align(
                 alignment: Alignment.center,
                 child: RoundedButton(
-                  color: Colors.blue,
+                  color: agree ? Colors.blue : Colors.grey,
                   onPressed: () {
-                    Navigator.of(context).pushNamed('/');
+                    agree ? Navigator.of(context).pushNamed('/') : null;
                   },
                   text: "SIGN UP",
                 ),
               ),
               Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
                     "Already have an account? ",
@@ -183,12 +184,16 @@ class _SignUpPageState extends State<SignUpPage> {
                       },
                       child: Text(
                         "Sign In",
+                        style: TextStyle(color: Colors.lightBlueAccent),
                       )),
                 ],
               ),
-              Text(
-                "©2021 CrewsNet All rights reserved.",
-                style: CCopyrightStyle,
+              Align(
+                alignment: Alignment.center,
+                child: Text(
+                  "©2021 CrewsNet All rights reserved.",
+                  style: CCopyrightStyle,
+                ),
               ),
             ],
           ),
