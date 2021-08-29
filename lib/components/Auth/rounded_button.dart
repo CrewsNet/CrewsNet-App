@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
 class RoundedButton extends StatelessWidget {
   RoundedButton(
@@ -9,18 +10,18 @@ class RoundedButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 16.0),
+      padding: EdgeInsets.symmetric(vertical: 4.w),
       child: Material(
-        elevation: 5.0,
+        elevation: 1.3.w,
         color: color,
-        borderRadius: BorderRadius.circular(30.0),
+        borderRadius: BorderRadius.circular(4.8.h),
         child: MaterialButton(
           onPressed: onPressed,
-          minWidth: 300.0,
-          height: 40.0,
+          minWidth: 76.w,
+          height: 10.w,
           child: Text(
             "$text",
-            style: TextStyle(color: Colors.white, fontSize: 18),
+            style: TextStyle(color: Colors.white, fontSize: 13.8.sp),
           ),
         ),
       ),
