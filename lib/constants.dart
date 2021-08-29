@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
-const AuthTextFieldDecoration = InputDecoration(
+var AuthTextFieldDecoration = InputDecoration(
+  errorStyle: TextStyle(fontSize: 10.sp),
   hintText: "Enter your email",
-  contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+  hintStyle: TextStyle(fontSize:10.sp ),
+  contentPadding: EdgeInsets.symmetric(vertical: 1.2.h, horizontal: 2.5.h),
   border: OutlineInputBorder(
     borderRadius: BorderRadius.all(
-      Radius.circular(20.0),
+      Radius.circular(2.5.h),
     ),
   ),
   focusedBorder: OutlineInputBorder(
     borderRadius: BorderRadius.all(
-      Radius.circular(20.0),
+      Radius.circular(2.5.h),
     ),
     borderSide: BorderSide(
       color: Colors.lightBlue,
-      width: 1.5,
+      width: 0.4.w,
     ),
   ),
 );

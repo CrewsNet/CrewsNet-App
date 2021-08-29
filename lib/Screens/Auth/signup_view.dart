@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:crews_net_app/constants.dart';
 import 'package:crews_net_app/components/Auth/rounded_button.dart';
+import 'package:sizer/sizer.dart';
 
 class SignUpPage extends StatefulWidget {
   @override
@@ -35,32 +36,33 @@ class _SignUpPageState extends State<SignUpPage> with InputValidationMixin {
                   Text(
                     "CrewsNET",
                     style:
-                        TextStyle(fontSize: 40.0, fontWeight: FontWeight.bold),
+                        TextStyle(fontSize: 30.5.sp, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(
-                    height: 10,
+                    height: 1.2.h,
                   ),
                   Text(
                     "Sign Up",
                     style:
-                        TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold),
+                        TextStyle(fontSize: 23.sp, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(
-                    height: 10,
+                    height: 1.2.h,
                   ),
                   Text(
                     "Get connected with the world of projects",
+                    style: TextStyle(fontSize: 11.45.sp),
                   ),
                   SizedBox(
-                    height: 10,
+                    height: 1.2.h,
                   ),
                   Container(
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
+                      borderRadius: BorderRadius.circular(2.4.h),
                       color: Color(0xFF323232),
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding:  EdgeInsets.all(1.h),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
@@ -68,14 +70,14 @@ class _SignUpPageState extends State<SignUpPage> with InputValidationMixin {
                             onTap: () {},
                             child: Image.asset(
                               "assets/images/google.png",
-                              height: 45,
+                              height: 5.6.h,
                             ),
                           ),
                           GestureDetector(
                             onTap: () {},
                             child: Image.asset(
                               "assets/images/GitHub-Icon.png",
-                              height: 45,
+                              height: 5.6.h,
                             ),
                           ),
                         ],
@@ -83,35 +85,35 @@ class _SignUpPageState extends State<SignUpPage> with InputValidationMixin {
                     ),
                   ),
                   SizedBox(
-                    height: 10,
+                    height: 1.2.h,
                   ),
                   Row(
                     children: [
                       Expanded(
                         child: Divider(
                           color: Colors.white,
-                          thickness: 1.5,
+                          thickness: 0.18.h,
                         ),
                       ),
                       Text(
                         " Sign up with Email ",
-                        style: TextStyle(fontSize: 17.0),
+                        style: TextStyle(fontSize: 13.sp),
                       ),
                       Expanded(
                         child: Divider(
                           color: Colors.white,
-                          thickness: 1.5,
+                          thickness: 0.18.h,
                         ),
                       ),
                     ],
                   ),
                   SizedBox(
-                    height: 10,
+                    height: 1.2.h,
                   ),
                   Text(
                     "Name*",
                     style: TextStyle(
-                      fontSize: 15.0,
+                      fontSize: 11.45.sp,
                     ),
                     textAlign: TextAlign.start,
                   ),
@@ -130,12 +132,12 @@ class _SignUpPageState extends State<SignUpPage> with InputValidationMixin {
                         hintText: "Enter your name"),
                   ),
                   SizedBox(
-                    height: 10,
+                    height: 1.2.h,
                   ),
                   Text(
                     "Email*",
                     style: TextStyle(
-                      fontSize: 15.0,
+                      fontSize: 11.45.sp,
                     ),
                   ),
                   TextFormField(
@@ -158,7 +160,7 @@ class _SignUpPageState extends State<SignUpPage> with InputValidationMixin {
                   Text(
                     "Password*",
                     style: TextStyle(
-                      fontSize: 15.0,
+                      fontSize: 11.45.sp,
                     ),
                   ),
                   TextFormField(
@@ -180,20 +182,23 @@ class _SignUpPageState extends State<SignUpPage> with InputValidationMixin {
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Checkbox(
-                          activeColor: Colors.blueGrey,
-                          value: agree,
-                          onChanged: (value) {
-                            setState(() {
-                              agree = !agree;
-                            });
-                          },
+                        Transform.scale(
+                          scale:0.23.w,
+                          child: Checkbox(
+                            activeColor: Colors.blueGrey,
+                            value: agree,
+                            onChanged: (value) {
+                              setState(() {
+                                agree = !agree;
+                              });
+                            },
+                          ),
                         ),
                         Text(
                           "I have read and accept terms and conditions",
-                          style: TextStyle(color: Colors.white,fontSize: 13.0),
+                          style: TextStyle(color: Colors.white,fontSize: 10.sp),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -217,7 +222,7 @@ class _SignUpPageState extends State<SignUpPage> with InputValidationMixin {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "Already have an account? ",
+                        "Already have an account? ",style: TextStyle(fontSize: 11.sp),
                       ),
                       GestureDetector(
                           onTap: () {
@@ -225,7 +230,7 @@ class _SignUpPageState extends State<SignUpPage> with InputValidationMixin {
                           },
                           child: Text(
                             "Sign In",
-                            style: TextStyle(color: Colors.lightBlueAccent),
+                            style: TextStyle(color: Colors.lightBlueAccent,fontSize: 11.sp),
                           )),
                     ],
                   ),
@@ -233,7 +238,7 @@ class _SignUpPageState extends State<SignUpPage> with InputValidationMixin {
                     alignment: Alignment.center,
                     child: Text(
                       "©2021 CrewsNet All rights reserved.",
-                      style: TextStyle(fontSize: 10),
+                      style: TextStyle(fontSize: 7.63.sp),
                     ),
                   ),
                 ],

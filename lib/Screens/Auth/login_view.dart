@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:crews_net_app/constants.dart';
 import 'package:crews_net_app/components/Auth/rounded_button.dart';
+import 'package:sizer/sizer.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -17,49 +18,52 @@ class _LoginPageState extends State<LoginPage> with InputValidationMixin {
   bool agree = false;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black12,
-      body: Form(
-        key: loginGlobalKey,
-        child: SingleChildScrollView(
+    print(100.sp);
+
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Colors.black12,
+        body: Form(
+          key: loginGlobalKey,
           child: SizedBox(
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width,
+            height: 100.h,
+            width: 100.w,
             child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 25),
+              padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 6.3.w),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
                     "CrewsNET",
-                    style:
-                        TextStyle(fontSize: 40.0, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        fontSize: 30.5.sp, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(
-                    height: 10,
+                    height: 1.2.h,
                   ),
                   Text(
                     "Log In",
                     style:
-                        TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold),
+                        TextStyle(fontSize: 23.sp, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(
-                    height: 10,
+                    height: 1.2.h,
                   ),
                   Text(
                     "Get connected with the world of projects",
+                    style: TextStyle(fontSize: 11.45.sp),
                   ),
                   SizedBox(
-                    height: 10,
+                    height: 1.2.h,
                   ),
                   Container(
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
+                      borderRadius: BorderRadius.circular(2.5.h),
                       color: Color(0xFF323232),
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: EdgeInsets.all(2.w),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
@@ -67,14 +71,14 @@ class _LoginPageState extends State<LoginPage> with InputValidationMixin {
                             onTap: () {},
                             child: Image.asset(
                               "assets/images/google.png",
-                              height: 45,
+                              height: 5.6.h,
                             ),
                           ),
                           GestureDetector(
                             onTap: () {},
                             child: Image.asset(
                               "assets/images/GitHub-Icon.png",
-                              height: 45,
+                              height: 5.6.h,
                             ),
                           ),
                         ],
@@ -82,35 +86,35 @@ class _LoginPageState extends State<LoginPage> with InputValidationMixin {
                     ),
                   ),
                   SizedBox(
-                    height: 10,
+                    height: 1.2.h,
                   ),
                   Row(
                     children: [
                       Expanded(
                         child: Divider(
                           color: Colors.white,
-                          thickness: 1.5,
+                          thickness: 0.4.w,
                         ),
                       ),
                       Text(
                         " Log in with Email ",
-                        style: TextStyle(fontSize: 17.0),
+                        style: TextStyle(fontSize: 13.sp),
                       ),
                       Expanded(
                         child: Divider(
                           color: Colors.white,
-                          thickness: 1.5,
+                          thickness: 0.4.w,
                         ),
                       ),
                     ],
                   ),
                   SizedBox(
-                    height: 20,
+                    height: 2.5.h,
                   ),
                   Text(
                     "Email*",
                     style: TextStyle(
-                      fontSize: 15.0,
+                      fontSize: 14.sp,
                     ),
                   ),
                   TextFormField(
@@ -128,12 +132,12 @@ class _LoginPageState extends State<LoginPage> with InputValidationMixin {
                     decoration: AuthTextFieldDecoration,
                   ),
                   SizedBox(
-                    height: 10,
+                    height: 1.2.h,
                   ),
                   Text(
                     "Password*",
                     style: TextStyle(
-                      fontSize: 15.0,
+                      fontSize: 14.sp,
                     ),
                   ),
                   TextFormField(
@@ -153,23 +157,33 @@ class _LoginPageState extends State<LoginPage> with InputValidationMixin {
                         hintText: "Enter your Password"),
                   ),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Checkbox(
-                        activeColor: Colors.blueGrey,
-                        value: agree,
-                        onChanged: (value) {
-                          setState(() {
-                            agree = !agree;
-                          });
-                        },
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Transform.scale(
+                            scale: 0.23.w,
+                            child: Checkbox(
+                              activeColor: Colors.blueGrey,
+                              value: agree,
+                              onChanged: (value) {
+                                setState(() {
+                                  agree = !agree;
+                                });
+                              },
+                            ),
+                          ),
+                          Text(
+                            "Remember Me",
+                            style: TextStyle(fontSize: 10.3.sp),
+                          ),
+                        ],
                       ),
-                      Text(
-                        "Remember Me",
-                      ),
-                      SizedBox(width: MediaQuery.of(context).size.width/6,),
                       GestureDetector(
                         child: Text(
                           "Forgot Password?",
+                          style: TextStyle(fontSize: 10.3.sp),
                         ),
                       ),
                     ],
@@ -192,6 +206,7 @@ class _LoginPageState extends State<LoginPage> with InputValidationMixin {
                     children: [
                       Text(
                         "Don't have an account? ",
+                        style: TextStyle(fontSize: 11.sp),
                       ),
                       GestureDetector(
                           onTap: () {
@@ -199,7 +214,8 @@ class _LoginPageState extends State<LoginPage> with InputValidationMixin {
                           },
                           child: Text(
                             "Sign Up",
-                            style: TextStyle(color: Colors.lightBlueAccent),
+                            style: TextStyle(
+                                color: Colors.lightBlueAccent, fontSize: 11.sp),
                           )),
                     ],
                   ),
@@ -207,7 +223,7 @@ class _LoginPageState extends State<LoginPage> with InputValidationMixin {
                     alignment: Alignment.center,
                     child: Text(
                       "©2021 CrewsNet All rights reserved.",
-                      style: TextStyle(fontSize: 10),
+                      style: TextStyle(fontSize: 8.sp),
                     ),
                   ),
                 ],
