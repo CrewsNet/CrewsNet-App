@@ -1,4 +1,5 @@
 import 'package:crews_net_app/Utils/auth_validators.dart';
+import 'package:crews_net_app/components/Auth/Button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:crews_net_app/constants.dart';
@@ -30,7 +31,7 @@ class _LoginPageState extends State<LoginPage> with InputValidationMixin {
             child: Form(
               key: loginGlobalKey,
               child: SizedBox(
-                height: 100.h,
+                height: 90.h,
                 width: 100.w,
                 child: Padding(
                   padding:
@@ -65,27 +66,22 @@ class _LoginPageState extends State<LoginPage> with InputValidationMixin {
                       Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(2.5.h),
-                          color: Color(0xFF323232),
                         ),
                         child: Padding(
                           padding: EdgeInsets.all(2.w),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              GestureDetector(
-                                onTap: () {},
-                                child: Image.asset(
-                                  "assets/images/google.png",
-                                  height: 5.6.h,
-                                ),
+                              Button(
+                                imageUrl: "assets/images/google.png",
+                                height: 9.h,
+                                width: 23.w,
                               ),
-                              GestureDetector(
-                                onTap: () {},
-                                child: Image.asset(
-                                  "assets/images/GitHub-Icon.png",
-                                  height: 5.6.h,
-                                ),
-                              ),
+                              Button(
+                                imageUrl: "assets/images/GitHub-Icon.png",
+                                height: 9.h,
+                                width: 23.w,
+                              )
                             ],
                           ),
                         ),
@@ -116,12 +112,6 @@ class _LoginPageState extends State<LoginPage> with InputValidationMixin {
                       SizedBox(
                         height: 2.5.h,
                       ),
-                      Text(
-                        "Email*",
-                        style: TextStyle(
-                          fontSize: 14.sp,
-                        ),
-                      ),
                       TextFormField(
                         validator: (email) {
                           if (isEmailValid(email!))
@@ -137,12 +127,6 @@ class _LoginPageState extends State<LoginPage> with InputValidationMixin {
                       SizedBox(
                         height: 1.2.h,
                       ),
-                      Text(
-                        "Password*",
-                        style: TextStyle(
-                          fontSize: 14.sp,
-                        ),
-                      ),
                       TextFormField(
                         validator: (password) {
                           if (isPasswordValid(password!))
@@ -154,6 +138,7 @@ class _LoginPageState extends State<LoginPage> with InputValidationMixin {
                         obscureText: true,
                         textAlign: TextAlign.center,
                         decoration: AuthTextFieldDecoration.copyWith(
+                            labelText: "Password",
                             hintText: "Enter your Password"),
                       ),
                       Row(

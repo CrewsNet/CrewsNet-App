@@ -1,7 +1,8 @@
+import 'package:crews_net_app/constants.dart';
 import 'package:crews_net_app/Utils/auth_validators.dart';
+import 'package:crews_net_app/components/Auth/Button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:crews_net_app/constants.dart';
 import 'package:crews_net_app/components/Auth/rounded_button.dart';
 import 'package:sizer/sizer.dart';
 import 'package:dio/dio.dart';
@@ -21,14 +22,15 @@ class _SignUpPageState extends State<SignUpPage> with InputValidationMixin {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: Colors.black12,
-        body: Form(
+    return Scaffold(
+      backgroundColor: Colors.black12,
+      body: Center(
+        child: Form(
           key: signUpGlobalKey,
           child: SingleChildScrollView(
             child: SizedBox(
-              height: MediaQuery.of(context).size.height,
+              height: 90.h,
+              width: 100.w,
               child: Padding(
                 padding:
                     const EdgeInsets.symmetric(vertical: 30, horizontal: 25),
@@ -62,27 +64,22 @@ class _SignUpPageState extends State<SignUpPage> with InputValidationMixin {
                     Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(2.4.h),
-                        color: Color(0xFF323232),
                       ),
                       child: Padding(
                         padding: EdgeInsets.all(1.h),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            GestureDetector(
-                              onTap: () {},
-                              child: Image.asset(
-                                "assets/images/google.png",
-                                height: 5.6.h,
-                              ),
+                            Button(
+                              imageUrl: "assets/images/google.png",
+                              height: 9.h,
+                              width: 23.w,
                             ),
-                            GestureDetector(
-                              onTap: () {},
-                              child: Image.asset(
-                                "assets/images/GitHub-Icon.png",
-                                height: 5.6.h,
-                              ),
-                            ),
+                            Button(
+                              imageUrl: "assets/images/GitHub-Icon.png",
+                              height: 9.h,
+                              width: 23.w,
+                            )
                           ],
                         ),
                       ),
@@ -113,13 +110,6 @@ class _SignUpPageState extends State<SignUpPage> with InputValidationMixin {
                     SizedBox(
                       height: 1.2.h,
                     ),
-                    Text(
-                      "Name*",
-                      style: TextStyle(
-                        fontSize: 11.45.sp,
-                      ),
-                      textAlign: TextAlign.start,
-                    ),
                     TextFormField(
                       validator: (name) {
                         if (isNameValid(name!))
@@ -127,20 +117,13 @@ class _SignUpPageState extends State<SignUpPage> with InputValidationMixin {
                         else
                           return 'Enter a valid name';
                       },
-                      //
                       controller: nameController,
                       textAlign: TextAlign.center,
                       decoration: AuthTextFieldDecoration.copyWith(
-                          hintText: "Enter your name"),
+                          hintText: "Enter your name", labelText: "Name"),
                     ),
                     SizedBox(
                       height: 1.2.h,
-                    ),
-                    Text(
-                      "Email*",
-                      style: TextStyle(
-                        fontSize: 11.45.sp,
-                      ),
                     ),
                     TextFormField(
                       controller: emailController,
@@ -157,12 +140,6 @@ class _SignUpPageState extends State<SignUpPage> with InputValidationMixin {
                     SizedBox(
                       height: 10,
                     ),
-                    Text(
-                      "Password*",
-                      style: TextStyle(
-                        fontSize: 11.45.sp,
-                      ),
-                    ),
                     TextFormField(
                       validator: (password) {
                         if (isPasswordValid(password!))
@@ -174,7 +151,8 @@ class _SignUpPageState extends State<SignUpPage> with InputValidationMixin {
                       obscureText: true,
                       textAlign: TextAlign.center,
                       decoration: AuthTextFieldDecoration.copyWith(
-                          hintText: "Enter your Password"),
+                          hintText: "Enter your Password",
+                          labelText: "Password"),
                     ),
                     Align(
                       alignment: Alignment.centerLeft,
