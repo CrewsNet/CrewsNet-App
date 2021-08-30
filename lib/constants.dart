@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
 var AuthTextFieldDecoration = InputDecoration(
+  labelText: "Email",
+  labelStyle: TextStyle(fontSize: 15.sp),
   errorStyle: TextStyle(fontSize: 10.sp),
   hintText: "Enter your email",
   hintStyle: TextStyle(fontSize:10.sp ),
