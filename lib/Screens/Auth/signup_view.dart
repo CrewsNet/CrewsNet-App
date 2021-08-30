@@ -1,7 +1,11 @@
+import 'package:crews_net_app/constants.dart';
+import 'package:crews_net_app/Utils/auth_validators.dart';
+import 'package:crews_net_app/components/Auth/Button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:crews_net_app/screens.dart';
-
+import 'package:crews_net_app/components/Auth/rounded_button.dart';
+import 'package:sizer/sizer.dart';
+import 'package:dio/dio.dart';
 
 class SignUpPage extends StatefulWidget {
   @override
@@ -9,12 +13,12 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> with InputValidationMixin {
+  Dio dio = Dio();
   bool agree = false;
   final signUpGlobalKey = GlobalKey<FormState>();
-  final messageController = TextEditingController();
-  String name = "";
-  String email = "";
-  String password = "";
+  final nameController = TextEditingController();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -28,23 +32,24 @@ class _SignUpPageState extends State<SignUpPage> with InputValidationMixin {
               height: 90.h,
               width: 100.w,
               child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 25),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 30, horizontal: 25),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Text(
                       "CrewsNET",
-                      style:
-                          TextStyle(fontSize: 30.5.sp, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          fontSize: 30.5.sp, fontWeight: FontWeight.bold),
                     ),
                     SizedBox(
                       height: 1.2.h,
                     ),
                     Text(
                       "Sign Up",
-                      style:
-                          TextStyle(fontSize: 23.sp, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          fontSize: 23.sp, fontWeight: FontWeight.bold),
                     ),
                     SizedBox(
                       height: 1.2.h,
@@ -59,15 +64,22 @@ class _SignUpPageState extends State<SignUpPage> with InputValidationMixin {
                     Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(2.4.h),
-
                       ),
                       child: Padding(
-                        padding:  EdgeInsets.all(1.h),
+                        padding: EdgeInsets.all(1.h),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            Button(imageUrl: "assets/images/google.png",height: 9.h,width: 23.w,),
-                            Button(imageUrl: "assets/images/GitHub-Icon.png",height: 9.h,width: 23.w,)
+                            Button(
+                              imageUrl: "assets/images/google.png",
+                              height: 9.h,
+                              width: 23.w,
+                            ),
+                            Button(
+                              imageUrl: "assets/images/GitHub-Icon.png",
+                              height: 9.h,
+                              width: 23.w,
+                            )
                           ],
                         ),
                       ),
@@ -105,20 +117,16 @@ class _SignUpPageState extends State<SignUpPage> with InputValidationMixin {
                         else
                           return 'Enter a valid name';
                       },
-                      onFieldSubmitted: (value) {
-                        name = value;
-                      },
+                      controller: nameController,
                       textAlign: TextAlign.center,
                       decoration: AuthTextFieldDecoration.copyWith(
-                          hintText: "Enter your name",labelText: "Name"),
+                          hintText: "Enter your name", labelText: "Name"),
                     ),
                     SizedBox(
                       height: 1.2.h,
                     ),
                     TextFormField(
-                      onFieldSubmitted: (value) {
-                        email = value;
-                      },
+                      controller: emailController,
                       validator: (email) {
                         if (isEmailValid(email!))
                           return null;
@@ -133,20 +141,18 @@ class _SignUpPageState extends State<SignUpPage> with InputValidationMixin {
                       height: 10,
                     ),
                     TextFormField(
-                      onFieldSubmitted: (value) {
-                        password = value;
-                      },
                       validator: (password) {
                         if (isPasswordValid(password!))
                           return null;
                         else
                           return 'Enter a valid password';
                       },
-                      controller: messageController,
+                      controller: passwordController,
                       obscureText: true,
                       textAlign: TextAlign.center,
                       decoration: AuthTextFieldDecoration.copyWith(
-                          hintText: "Enter your Password",labelText: "Password"),
+                          hintText: "Enter your Password",
+                          labelText: "Password"),
                     ),
                     Align(
                       alignment: Alignment.centerLeft,
@@ -154,7 +160,7 @@ class _SignUpPageState extends State<SignUpPage> with InputValidationMixin {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Transform.scale(
-                            scale:0.23.w,
+                            scale: 0.23.w,
                             child: Checkbox(
                               activeColor: Colors.blueGrey,
                               value: agree,
@@ -167,7 +173,8 @@ class _SignUpPageState extends State<SignUpPage> with InputValidationMixin {
                           ),
                           Text(
                             "I have read and accept terms and conditions",
-                            style: TextStyle(color: Colors.white,fontSize: 10.sp),
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 10.sp),
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -178,10 +185,21 @@ class _SignUpPageState extends State<SignUpPage> with InputValidationMixin {
                       alignment: Alignment.center,
                       child: RoundedButton(
                         color: agree ? Colors.blue : Colors.grey,
-                        onPressed: () {
-                          if (agree && signUpGlobalKey.currentState!.validate()) {
+                        onPressed: () async {
+                          if (agree &&
+                              signUpGlobalKey.currentState!.validate()) {
                             signUpGlobalKey.currentState!.save();
-                            Navigator.of(context).pushNamed('/');
+
+                            var response = await dio.post(
+                                'http://10.0.2.2:8000/api/users/signup',
+                                data: {
+                                  'name': nameController.value.text,
+                                  'email': emailController.value.text,
+                                  'password': passwordController.value.text,
+                                });
+                            if (response.statusCode == 201) {
+                              Navigator.of(context).pushNamed('/');
+                            }
                           }
                         },
                         text: "SIGN UP",
@@ -191,7 +209,8 @@ class _SignUpPageState extends State<SignUpPage> with InputValidationMixin {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          "Already have an account? ",style: TextStyle(fontSize: 11.sp),
+                          "Already have an account? ",
+                          style: TextStyle(fontSize: 11.sp),
                         ),
                         GestureDetector(
                             onTap: () {
@@ -199,7 +218,9 @@ class _SignUpPageState extends State<SignUpPage> with InputValidationMixin {
                             },
                             child: Text(
                               "Sign In",
-                              style: TextStyle(color: Colors.lightBlueAccent,fontSize: 11.sp),
+                              style: TextStyle(
+                                  color: Colors.lightBlueAccent,
+                                  fontSize: 11.sp),
                             )),
                       ],
                     ),

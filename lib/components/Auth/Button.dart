@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:crews_net_app/screens.dart';
+import 'package:sizer/sizer.dart';
 
 class Button extends StatelessWidget {
   final String title;
@@ -26,7 +26,7 @@ class Button extends StatelessWidget {
           ),
         ),
         backgroundColor:
-        MaterialStateProperty.all(Color.fromRGBO(71, 71, 71, 1)),
+            MaterialStateProperty.all(Color.fromRGBO(71, 71, 71, 1)),
       ),
       onPressed: () {},
       child: Center(
