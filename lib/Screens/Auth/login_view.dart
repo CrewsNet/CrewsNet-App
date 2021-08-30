@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:crews_net_app/constants.dart';
 import 'package:crews_net_app/components/Auth/rounded_button.dart';
 import 'package:sizer/sizer.dart';
+import 'package:dio/dio.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -11,10 +12,11 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> with InputValidationMixin {
+  Dio dio = Dio();
   final loginGlobalKey = GlobalKey<FormState>();
-  final messageController = TextEditingController();
-  String email = "";
-  String password = "";
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+
   bool agree = false;
   @override
   Widget build(BuildContext context) {
@@ -31,7 +33,8 @@ class _LoginPageState extends State<LoginPage> with InputValidationMixin {
                 height: 100.h,
                 width: 100.w,
                 child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 6.3.w),
+                  padding:
+                      EdgeInsets.symmetric(vertical: 5.h, horizontal: 6.3.w),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -46,8 +49,8 @@ class _LoginPageState extends State<LoginPage> with InputValidationMixin {
                       ),
                       Text(
                         "Log In",
-                        style:
-                            TextStyle(fontSize: 23.sp, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            fontSize: 23.sp, fontWeight: FontWeight.bold),
                       ),
                       SizedBox(
                         height: 1.2.h,
@@ -126,9 +129,7 @@ class _LoginPageState extends State<LoginPage> with InputValidationMixin {
                           else
                             return 'Enter a valid email address';
                         },
-                        onFieldSubmitted: (value) {
-                          email = value;
-                        },
+                        controller: emailController,
                         keyboardType: TextInputType.emailAddress,
                         textAlign: TextAlign.center,
                         decoration: AuthTextFieldDecoration,
@@ -143,16 +144,13 @@ class _LoginPageState extends State<LoginPage> with InputValidationMixin {
                         ),
                       ),
                       TextFormField(
-                        onFieldSubmitted: (value) {
-                          password = value;
-                        },
                         validator: (password) {
                           if (isPasswordValid(password!))
                             return null;
                           else
                             return 'Enter a valid password';
                         },
-                        controller: messageController,
+                        controller: passwordController,
                         obscureText: true,
                         textAlign: TextAlign.center,
                         decoration: AuthTextFieldDecoration.copyWith(
@@ -194,10 +192,18 @@ class _LoginPageState extends State<LoginPage> with InputValidationMixin {
                         alignment: Alignment.center,
                         child: RoundedButton(
                           color: Colors.blue,
-                          onPressed: () {
+                          onPressed: () async {
                             if (loginGlobalKey.currentState!.validate()) {
                               loginGlobalKey.currentState!.save();
-                              Navigator.of(context).pushNamed('/dashboard');
+                              var response = await dio.post(
+                                  'http://10.0.2.2:8000/api/users/login',
+                                  data: {
+                                    'email': emailController.value.text,
+                                    'password': passwordController.value.text,
+                                  });
+                              if (response.statusCode == 200) {
+                                Navigator.of(context).pushNamed('/dashboard');
+                              }
                             }
                           },
                           text: "LOG IN",
@@ -217,7 +223,8 @@ class _LoginPageState extends State<LoginPage> with InputValidationMixin {
                               child: Text(
                                 "Sign Up",
                                 style: TextStyle(
-                                    color: Colors.lightBlueAccent, fontSize: 11.sp),
+                                    color: Colors.lightBlueAccent,
+                                    fontSize: 11.sp),
                               )),
                         ],
                       ),
