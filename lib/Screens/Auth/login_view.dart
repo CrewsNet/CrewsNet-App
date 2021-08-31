@@ -20,8 +20,10 @@ class _LoginPageState extends State<LoginPage> with InputValidationMixin {
 
   bool agree = false;
   bool _obscureText = true;
+@override
 
   @override
+
   Widget build(BuildContext context) {
     print(100.sp);
 
@@ -67,22 +69,27 @@ class _LoginPageState extends State<LoginPage> with InputValidationMixin {
                       ),
                       Container(
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(2.5.h),
+                          borderRadius: BorderRadius.circular(3.5.h),
+                          color: Color.fromRGBO(71, 71, 71, 1),
                         ),
                         child: Padding(
-                          padding: EdgeInsets.all(2.w),
+                          padding: EdgeInsets.all(1.w),
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Button(
                                 imageUrl: "assets/images/google.png",
                                 height: 9.h,
                                 width: 23.w,
+                                color: Colors.yellow,
+
                               ),
                               Button(
                                 imageUrl: "assets/images/GitHub-Icon.png",
                                 height: 9.h,
                                 width: 23.w,
+                                color: Colors.redAccent,
+
                               )
                             ],
                           ),
@@ -242,4 +249,6 @@ class _LoginPageState extends State<LoginPage> with InputValidationMixin {
       ),
     );
   }
+
+
 }
