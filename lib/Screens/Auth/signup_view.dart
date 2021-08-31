@@ -28,7 +28,6 @@ class _SignUpPageState extends State<SignUpPage> with InputValidationMixin {
         child: Center(
           child: Form(
             key: signUpGlobalKey,
-            child: SingleChildScrollView(
               child: SizedBox(
                 height: 90.h,
                 width: 100.w,
@@ -236,7 +235,7 @@ class _SignUpPageState extends State<SignUpPage> with InputValidationMixin {
                   ),
                 ),
               ),
-            ),
+
           ),
         ),
       ),
