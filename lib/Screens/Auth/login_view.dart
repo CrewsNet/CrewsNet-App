@@ -19,6 +19,8 @@ class _LoginPageState extends State<LoginPage> with InputValidationMixin {
   final passwordController = TextEditingController();
 
   bool agree = false;
+  bool _obscureText = true;
+
   @override
   Widget build(BuildContext context) {
     print(100.sp);
@@ -135,11 +137,21 @@ class _LoginPageState extends State<LoginPage> with InputValidationMixin {
                             return 'Enter a valid password';
                         },
                         controller: passwordController,
-                        obscureText: true,
+                        obscureText: _obscureText,
                         textAlign: TextAlign.center,
                         decoration: AuthTextFieldDecoration.copyWith(
-                            labelText: "Password",
-                            hintText: "Enter your Password"),
+                          labelText: "Password",
+                          hintText: "Enter your Password",
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                                _obscureText ? Icons.visibility_off : Icons.visibility),
+                            onPressed: () {
+                              setState(() {
+                                _obscureText = !_obscureText;
+                              });
+                            },
+                          ),
+                        ),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,

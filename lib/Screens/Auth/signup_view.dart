@@ -15,6 +15,7 @@ class SignUpPage extends StatefulWidget {
 class _SignUpPageState extends State<SignUpPage> with InputValidationMixin {
   Dio dio = Dio();
   bool agree = false;
+  bool _obscureText = true;
   final signUpGlobalKey = GlobalKey<FormState>();
   final nameController = TextEditingController();
   final emailController = TextEditingController();
@@ -28,214 +29,223 @@ class _SignUpPageState extends State<SignUpPage> with InputValidationMixin {
         child: Center(
           child: Form(
             key: signUpGlobalKey,
-              child: SizedBox(
-                height: 90.h,
-                width: 100.w,
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 30, horizontal: 25),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Text(
-                        "CrewsNET",
-                        style: TextStyle(
-                            fontSize: 30.5.sp, fontWeight: FontWeight.bold),
+            child: SizedBox(
+              height: 90.h,
+              width: 100.w,
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 30, horizontal: 25),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Text(
+                      "CrewsNET",
+                      style: TextStyle(
+                          fontSize: 30.5.sp, fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(
+                      height: 1.2.h,
+                    ),
+                    Text(
+                      "Sign Up",
+                      style: TextStyle(
+                          fontSize: 23.sp, fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(
+                      height: 1.2.h,
+                    ),
+                    Text(
+                      "Get connected with the world of projects",
+                      style: TextStyle(fontSize: 11.45.sp),
+                    ),
+                    SizedBox(
+                      height: 1.2.h,
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(2.4.h),
                       ),
-                      SizedBox(
-                        height: 1.2.h,
-                      ),
-                      Text(
-                        "Sign Up",
-                        style: TextStyle(
-                            fontSize: 23.sp, fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(
-                        height: 1.2.h,
-                      ),
-                      Text(
-                        "Get connected with the world of projects",
-                        style: TextStyle(fontSize: 11.45.sp),
-                      ),
-                      SizedBox(
-                        height: 1.2.h,
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(2.4.h),
-                        ),
-                        child: Padding(
-                          padding: EdgeInsets.all(1.h),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Button(
-                                imageUrl: "assets/images/google.png",
-                                height: 9.h,
-                                width: 23.w,
-                              ),
-                              Button(
-                                imageUrl: "assets/images/GitHub-Icon.png",
-                                height: 9.h,
-                                width: 23.w,
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 1.2.h,
-                      ),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Divider(
-                              color: Colors.white,
-                              thickness: 0.18.h,
-                            ),
-                          ),
-                          Text(
-                            " Sign up with Email ",
-                            style: TextStyle(fontSize: 13.sp),
-                          ),
-                          Expanded(
-                            child: Divider(
-                              color: Colors.white,
-                              thickness: 0.18.h,
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 1.2.h,
-                      ),
-                      TextFormField(
-                        validator: (name) {
-                          if (isNameValid(name!))
-                            return null;
-                          else
-                            return 'Enter a valid name';
-                        },
-                        controller: nameController,
-                        textAlign: TextAlign.center,
-                        decoration: AuthTextFieldDecoration.copyWith(
-                            hintText: "Enter your name", labelText: "Name"),
-                      ),
-                      SizedBox(
-                        height: 1.2.h,
-                      ),
-                      TextFormField(
-                        controller: emailController,
-                        validator: (email) {
-                          if (isEmailValid(email!))
-                            return null;
-                          else
-                            return 'Enter a valid email address';
-                        },
-                        keyboardType: TextInputType.emailAddress,
-                        textAlign: TextAlign.center,
-                        decoration: AuthTextFieldDecoration,
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      TextFormField(
-                        validator: (password) {
-                          if (isPasswordValid(password!))
-                            return null;
-                          else
-                            return 'Enter a valid password';
-                        },
-                        controller: passwordController,
-                        obscureText: true,
-                        textAlign: TextAlign.center,
-                        decoration: AuthTextFieldDecoration.copyWith(
-                            hintText: "Enter your Password",
-                            labelText: "Password"),
-                      ),
-                      Align(
-                        alignment: Alignment.centerLeft,
+                      child: Padding(
+                        padding: EdgeInsets.all(1.h),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            Transform.scale(
-                              scale: 0.23.w,
-                              child: Checkbox(
-                                activeColor: Colors.blueGrey,
-                                value: agree,
-                                onChanged: (value) {
-                                  setState(() {
-                                    agree = !agree;
-                                  });
-                                },
-                              ),
+                            Button(
+                              imageUrl: "assets/images/google.png",
+                              height: 9.h,
+                              width: 23.w,
                             ),
-                            Text(
-                              "I have read and accept terms and conditions",
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 10.sp),
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                            ),
+                            Button(
+                              imageUrl: "assets/images/GitHub-Icon.png",
+                              height: 9.h,
+                              width: 23.w,
+                            )
                           ],
                         ),
                       ),
-                      Align(
-                        alignment: Alignment.center,
-                        child: RoundedButton(
-                          color: agree ? Colors.blue : Colors.grey,
-                          onPressed: () async {
-                            if (agree &&
-                                signUpGlobalKey.currentState!.validate()) {
-                              signUpGlobalKey.currentState!.save();
-
-                              var response = await dio.post(
-                                  'http://10.0.2.2:8000/api/users/signup',
-                                  data: {
-                                    'name': nameController.value.text,
-                                    'email': emailController.value.text,
-                                    'password': passwordController.value.text,
-                                  });
-                              if (response.statusCode == 201) {
-                                Navigator.of(context).pushNamed('/');
-                              }
-                            }
+                    ),
+                    SizedBox(
+                      height: 1.2.h,
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Divider(
+                            color: Colors.white,
+                            thickness: 0.18.h,
+                          ),
+                        ),
+                        Text(
+                          " Sign up with Email ",
+                          style: TextStyle(fontSize: 13.sp),
+                        ),
+                        Expanded(
+                          child: Divider(
+                            color: Colors.white,
+                            thickness: 0.18.h,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 1.2.h,
+                    ),
+                    TextFormField(
+                      validator: (name) {
+                        if (isNameValid(name!))
+                          return null;
+                        else
+                          return 'Enter a valid name';
+                      },
+                      controller: nameController,
+                      textAlign: TextAlign.center,
+                      decoration: AuthTextFieldDecoration.copyWith(
+                          hintText: "Enter your name", labelText: "Name"),
+                    ),
+                    SizedBox(
+                      height: 1.2.h,
+                    ),
+                    TextFormField(
+                      controller: emailController,
+                      validator: (email) {
+                        if (isEmailValid(email!))
+                          return null;
+                        else
+                          return 'Enter a valid email address';
+                      },
+                      keyboardType: TextInputType.emailAddress,
+                      textAlign: TextAlign.center,
+                      decoration: AuthTextFieldDecoration,
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    TextFormField(
+                      validator: (password) {
+                        if (isPasswordValid(password!))
+                          return null;
+                        else
+                          return 'Enter a valid password';
+                      },
+                      controller: passwordController,
+                      obscureText: _obscureText,
+                      textAlign: TextAlign.center,
+                      decoration: AuthTextFieldDecoration.copyWith(
+                        hintText: "Enter your Password",
+                        labelText: "Password",
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                              _obscureText ? Icons.visibility_off : Icons.visibility),
+                          onPressed: () {
+                            setState(() {
+                              _obscureText = !_obscureText;
+                            });
                           },
-                          text: "SIGN UP",
                         ),
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                    ),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Text(
-                            "Already have an account? ",
-                            style: TextStyle(fontSize: 11.sp),
-                          ),
-                          GestureDetector(
-                              onTap: () {
-                                Navigator.pushNamed(context, '/');
+                          Transform.scale(
+                            scale: 0.23.w,
+                            child: Checkbox(
+                              activeColor: Colors.blueGrey,
+                              value: agree,
+                              onChanged: (value) {
+                                setState(() {
+                                  agree = !agree;
+                                });
                               },
-                              child: Text(
-                                "Sign In",
-                                style: TextStyle(
-                                    color: Colors.lightBlueAccent,
-                                    fontSize: 11.sp),
-                              )),
+                            ),
+                          ),
+                          Text(
+                            "I have read and accept terms and conditions",
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 10.sp),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ],
                       ),
-                      Align(
-                        alignment: Alignment.center,
-                        child: Text(
-                          "©2021 CrewsNet All rights reserved.",
-                          style: TextStyle(fontSize: 7.63.sp),
-                        ),
+                    ),
+                    Align(
+                      alignment: Alignment.center,
+                      child: RoundedButton(
+                        color: agree ? Colors.blue : Colors.grey,
+                        onPressed: () async {
+                          if (agree &&
+                              signUpGlobalKey.currentState!.validate()) {
+                            signUpGlobalKey.currentState!.save();
+
+                            var response = await dio.post(
+                                'http://10.0.2.2:8000/api/users/signup',
+                                data: {
+                                  'name': nameController.value.text,
+                                  'email': emailController.value.text,
+                                  'password': passwordController.value.text,
+                                });
+                            if (response.statusCode == 201) {
+                              Navigator.of(context).pushNamed('/');
+                            }
+                          }
+                        },
+                        text: "SIGN UP",
                       ),
-                    ],
-                  ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Already have an account? ",
+                          style: TextStyle(fontSize: 11.sp),
+                        ),
+                        GestureDetector(
+                            onTap: () {
+                              Navigator.pushNamed(context, '/');
+                            },
+                            child: Text(
+                              "Sign In",
+                              style: TextStyle(
+                                  color: Colors.lightBlueAccent,
+                                  fontSize: 11.sp),
+                            )),
+                      ],
+                    ),
+                    Align(
+                      alignment: Alignment.center,
+                      child: Text(
+                        "©2021 CrewsNet All rights reserved.",
+                        style: TextStyle(fontSize: 7.63.sp),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-
+            ),
           ),
         ),
       ),
