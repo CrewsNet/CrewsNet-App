@@ -6,6 +6,7 @@ import 'package:crews_net_app/constants.dart';
 import 'package:crews_net_app/components/Auth/rounded_button.dart';
 import 'package:sizer/sizer.dart';
 import 'package:dio/dio.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -171,7 +172,10 @@ class _LoginPageState extends State<LoginPage> with InputValidationMixin {
                                 child: Checkbox(
                                   activeColor: Colors.blueGrey,
                                   value: agree,
-                                  onChanged: (value) {
+                                  onChanged: (value) async{
+                                      final SharedPreferences preferences = await SharedPreferences.getInstance();
+                                      preferences.setString('email',emailController.text);
+
                                     setState(() {
                                       agree = !agree;
                                     });
@@ -196,7 +200,7 @@ class _LoginPageState extends State<LoginPage> with InputValidationMixin {
                         alignment: Alignment.center,
                         child: RoundedButton(
                           color: Colors.blue,
-                          onPressed: () async {
+                          onPressed: ()  async {
                             if (loginGlobalKey.currentState!.validate()) {
                               loginGlobalKey.currentState!.save();
                               var response = await dio.post(
@@ -206,9 +210,11 @@ class _LoginPageState extends State<LoginPage> with InputValidationMixin {
                                     'password': passwordController.value.text,
                                   });
                               if (response.statusCode == 200) {
+
                                 Navigator.of(context).pushNamed('/dashboard');
                               }
                             }
+                            // else{ Navigator.of(context).pushNamed('/dashboard');}
                           },
                           text: "LOG IN",
                         ),

@@ -1,4 +1,5 @@
 import 'package:crews_net_app/Screens/Auth/login_view.dart';
+import 'package:crews_net_app/Screens/preloader.dart';
 import 'package:flutter/material.dart';
 
 import 'Screens/Auth/signup_view.dart';
@@ -10,7 +11,7 @@ class RouteGenerator {
     // final args = settings.arguments;
     switch (settings.name) {
       case '/':
-        return MaterialPageRoute(builder: (_) => LoginPage());
+        return MaterialPageRoute(builder: (_) => Preloader());
       case '/signup':
         return MaterialPageRoute(builder: (_) => SignUpPage());
       case '/dashboard':
