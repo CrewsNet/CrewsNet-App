@@ -6,6 +6,7 @@ import 'package:crews_net_app/constants.dart';
 import 'package:crews_net_app/components/Auth/rounded_button.dart';
 import 'package:sizer/sizer.dart';
 import 'package:dio/dio.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -20,8 +21,10 @@ class _LoginPageState extends State<LoginPage> with InputValidationMixin {
 
   bool agree = false;
   bool _obscureText = true;
+@override
 
   @override
+
   Widget build(BuildContext context) {
     print(100.sp);
 
@@ -67,22 +70,27 @@ class _LoginPageState extends State<LoginPage> with InputValidationMixin {
                       ),
                       Container(
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(2.5.h),
+                          borderRadius: BorderRadius.circular(3.5.h),
+                          color: Color.fromRGBO(71, 71, 71, 1),
                         ),
                         child: Padding(
-                          padding: EdgeInsets.all(2.w),
+                          padding: EdgeInsets.all(1.w),
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Button(
                                 imageUrl: "assets/images/google.png",
                                 height: 9.h,
                                 width: 23.w,
+                                color: Colors.yellow,
+
                               ),
                               Button(
                                 imageUrl: "assets/images/GitHub-Icon.png",
                                 height: 9.h,
                                 width: 23.w,
+                                color: Colors.redAccent,
+
                               )
                             ],
                           ),
@@ -164,7 +172,10 @@ class _LoginPageState extends State<LoginPage> with InputValidationMixin {
                                 child: Checkbox(
                                   activeColor: Colors.blueGrey,
                                   value: agree,
-                                  onChanged: (value) {
+                                  onChanged: (value) async{
+                                      final SharedPreferences preferences = await SharedPreferences.getInstance();
+                                      preferences.setString('email',emailController.text);
+
                                     setState(() {
                                       agree = !agree;
                                     });
@@ -189,7 +200,7 @@ class _LoginPageState extends State<LoginPage> with InputValidationMixin {
                         alignment: Alignment.center,
                         child: RoundedButton(
                           color: Colors.blue,
-                          onPressed: () async {
+                          onPressed: ()  async {
                             if (loginGlobalKey.currentState!.validate()) {
                               loginGlobalKey.currentState!.save();
                               var response = await dio.post(
@@ -199,9 +210,11 @@ class _LoginPageState extends State<LoginPage> with InputValidationMixin {
                                     'password': passwordController.value.text,
                                   });
                               if (response.statusCode == 200) {
+
                                 Navigator.of(context).pushNamed('/dashboard');
                               }
                             }
+                            // else{ Navigator.of(context).pushNamed('/dashboard');}
                           },
                           text: "LOG IN",
                         ),
@@ -242,4 +255,6 @@ class _LoginPageState extends State<LoginPage> with InputValidationMixin {
       ),
     );
   }
+
+
 }

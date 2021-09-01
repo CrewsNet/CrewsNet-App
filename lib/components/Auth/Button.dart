@@ -2,23 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
 class Button extends StatelessWidget {
-  final String title;
   final String imageUrl;
   final double height;
   final double width;
+  final Color color;
 
-  const Button({
-    Key? key,
-    this.title = "",
-    this.imageUrl = "",
-    this.height = 0.0,
-    this.width = 0.0,
-  }) : super(key: key);
+
+  const Button(
+      {Key? key,
+      required this.imageUrl,
+      required this.height,
+      required this.width,
+      required this.color,
+      })
+      : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ButtonStyle(
-        overlayColor: MaterialStateProperty.all(Colors.lightBlueAccent),
+        elevation: MaterialStateProperty.all(0),
+        overlayColor: MaterialStateProperty.all(this.color),
         minimumSize: MaterialStateProperty.all(Size(20.w, 5.4.h)),
         shape: MaterialStateProperty.all(
           RoundedRectangleBorder(
@@ -28,33 +32,27 @@ class Button extends StatelessWidget {
         backgroundColor:
             MaterialStateProperty.all(Color.fromRGBO(71, 71, 71, 1)),
       ),
-      onPressed: () {},
-      child: Center(
-        child: Container(
-          alignment: Alignment.center,
-          width: this.width,
-          height: this.height,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Padding(
-                padding: EdgeInsets.only(left: 5.w),
-                child: Image.asset(
-                  this.imageUrl,
-                  width: 12.7.w,
-                  height: 12.7.w,
-                ),
-              ),
-              Text(
-                this.title,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 13.7.sp,
-                ),
-              ),
-            ],
-          ),
+      onPressed: (){},
+      child: Container(
+        width: this.width,
+        height: this.height,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              this.imageUrl,
+              width: 12.7.w,
+              height: 12.7.w,
+            ),
+            // Text(
+            //   this.title,
+            //   style: TextStyle(
+            //     color: Colors.white,
+            //     fontWeight: FontWeight.w500,
+            //     fontSize: 13.7.sp,
+            //   ),
+            // ),
+          ],
         ),
       ),
     );
