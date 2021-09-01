@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:crews_net_app/constants.dart';
 import 'package:crews_net_app/components/Auth/rounded_button.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sizer/sizer.dart';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -21,10 +22,8 @@ class _LoginPageState extends State<LoginPage> with InputValidationMixin {
 
   bool agree = false;
   bool _obscureText = true;
-@override
-
   @override
-
+  @override
   Widget build(BuildContext context) {
     print(100.sp);
 
@@ -83,14 +82,12 @@ class _LoginPageState extends State<LoginPage> with InputValidationMixin {
                                 height: 9.h,
                                 width: 23.w,
                                 color: Colors.yellow,
-
                               ),
                               Button(
                                 imageUrl: "assets/images/GitHub-Icon.png",
                                 height: 9.h,
                                 width: 23.w,
                                 color: Colors.redAccent,
-
                               )
                             ],
                           ),
@@ -151,8 +148,9 @@ class _LoginPageState extends State<LoginPage> with InputValidationMixin {
                           labelText: "Password",
                           hintText: "Enter your Password",
                           suffixIcon: IconButton(
-                            icon: Icon(
-                                _obscureText ? Icons.visibility_off : Icons.visibility),
+                            icon: Icon(_obscureText
+                                ? Icons.visibility_off
+                                : Icons.visibility),
                             onPressed: () {
                               setState(() {
                                 _obscureText = !_obscureText;
@@ -172,9 +170,11 @@ class _LoginPageState extends State<LoginPage> with InputValidationMixin {
                                 child: Checkbox(
                                   activeColor: Colors.blueGrey,
                                   value: agree,
-                                  onChanged: (value) async{
-                                      final SharedPreferences preferences = await SharedPreferences.getInstance();
-                                      preferences.setString('email',emailController.text);
+                                  onChanged: (value) async {
+                                    final SharedPreferences preferences =
+                                        await SharedPreferences.getInstance();
+                                    preferences.setString(
+                                        'email', emailController.text);
 
                                     setState(() {
                                       agree = !agree;
@@ -200,18 +200,29 @@ class _LoginPageState extends State<LoginPage> with InputValidationMixin {
                         alignment: Alignment.center,
                         child: RoundedButton(
                           color: Colors.blue,
-                          onPressed: ()  async {
+                          onPressed: () async {
                             if (loginGlobalKey.currentState!.validate()) {
                               loginGlobalKey.currentState!.save();
-                              var response = await dio.post(
-                                  'http://10.0.2.2:8000/api/users/login',
-                                  data: {
-                                    'email': emailController.value.text,
-                                    'password': passwordController.value.text,
-                                  });
-                              if (response.statusCode == 200) {
-
-                                Navigator.of(context).pushNamed('/dashboard');
+                              try {
+                                var response = await dio.post(
+                                    'http://10.0.2.2:8000/api/users/login',
+                                    data: {
+                                      'email': emailController.value.text,
+                                      'password': passwordController.value.text,
+                                    });
+                                if (response.statusCode == 200) {
+                                  Navigator.of(context).pushNamed('/dashboard');
+                                }
+                              } on DioError catch (e) {
+                                Fluttertoast.showToast(
+                                  msg: e.message,
+                                  backgroundColor: Colors.red,
+                                  textColor: Colors.white,
+                                  gravity: ToastGravity.CENTER,
+                                  timeInSecForIosWeb: 1,
+                                  fontSize: 16.0,
+                                );
+                                print(e.response);
                               }
                             }
                             // else{ Navigator.of(context).pushNamed('/dashboard');}
@@ -255,6 +266,4 @@ class _LoginPageState extends State<LoginPage> with InputValidationMixin {
       ),
     );
   }
-
-
 }

@@ -36,8 +36,7 @@ class _SignUpPageState extends State<SignUpPage> with InputValidationMixin {
                 height: 90.h,
                 width: 100.w,
                 child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 30, horizontal: 25),
+                  padding: EdgeInsets.only(top: 2.h, left: 2.5.w, right: 2.5.w),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
