@@ -17,6 +17,7 @@ dependencies:
   google_fonts: ^2.1.0
   sizer: ^2.0.13
   shared_preferences: ^2.0.7
+  email_auth: ^1.0.0
 
 
 dev_dependencies:

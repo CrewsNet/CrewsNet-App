@@ -7,6 +7,8 @@ import 'package:crews_net_app/components/Auth/rounded_button.dart';
 import 'package:sizer/sizer.dart';
 import 'package:dio/dio.dart';
 
+import 'otp_verification_view.dart';
+
 class SignUpPage extends StatefulWidget {
   @override
   _SignUpPageState createState() => _SignUpPageState();
@@ -159,8 +161,9 @@ class _SignUpPageState extends State<SignUpPage> with InputValidationMixin {
                           hintText: "Enter your Password",
                           labelText: "Password",
                           suffixIcon: IconButton(
-                            icon: Icon(
-                                _obscureText ? Icons.visibility_off : Icons.visibility),
+                            icon: Icon(_obscureText
+                                ? Icons.visibility_off
+                                : Icons.visibility),
                             onPressed: () {
                               setState(() {
                                 _obscureText = !_obscureText;
@@ -188,8 +191,8 @@ class _SignUpPageState extends State<SignUpPage> with InputValidationMixin {
                             ),
                             Text(
                               "I have read and accept terms and conditions",
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 10.sp),
+                              style: TextStyle(
+                                  color: Colors.white, fontSize: 10.sp),
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                             ),
@@ -204,17 +207,25 @@ class _SignUpPageState extends State<SignUpPage> with InputValidationMixin {
                             if (agree &&
                                 signUpGlobalKey.currentState!.validate()) {
                               signUpGlobalKey.currentState!.save();
-
-                              var response = await dio.post(
-                                  'http://10.0.2.2:8000/api/users/signup',
-                                  data: {
-                                    'name': nameController.value.text,
-                                    'email': emailController.value.text,
-                                    'password': passwordController.value.text,
-                                  });
-                              if (response.statusCode == 201) {
-                                Navigator.of(context).pushNamed('/');
-                              }
+                              // var response = await dio.post(
+                              //     'http://10.0.2.2:8000/api/users/signup',
+                              //     data: {
+                              //       'name': nameController.value.text,
+                              //       'email': emailController.value.text,
+                              //       'password': passwordController.value.text,
+                              //     });
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => OtpVerification(
+                                      data: {
+                                        'name': nameController.value.text,
+                                        'email': emailController.value.text,
+                                        'password':
+                                            passwordController.value.text,
+                                      },
+                                    ),
+                                  ));
                             }
                           },
                           text: "SIGN UP",
