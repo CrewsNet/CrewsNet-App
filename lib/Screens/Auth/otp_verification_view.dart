@@ -5,6 +5,7 @@ import 'package:crews_net_app/components/Auth/rounded_button.dart';
 import 'package:sizer/sizer.dart';
 import 'package:dio/dio.dart';
 import 'package:email_auth/email_auth.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class OtpVerification extends StatefulWidget {
   final data;
@@ -18,7 +19,6 @@ class _OtpVerificationState extends State<OtpVerification> {
   final _otpController = TextEditingController();
   EmailAuth emailAuth = new EmailAuth(sessionName: "Sample session");
 
-
   void sendOtp() async {
     bool result = await emailAuth.sendOtp(
         recipientMail: widget.data["email"], otpLength: 5);
@@ -29,6 +29,7 @@ class _OtpVerificationState extends State<OtpVerification> {
         recipientMail: widget.data["email"],
         userOtp: _otpController.value.text));
   }
+
   @override
   initState() {
     super.initState();
@@ -57,10 +58,20 @@ class _OtpVerificationState extends State<OtpVerification> {
                 SizedBox(
                   height: 1.2.h,
                 ),
-                Text(
-                  "An OTP has been sent to ${widget.data["email"]}",
-                  style:
-                  TextStyle(fontSize: 15.sp, fontWeight: FontWeight.bold),
+                RichText(
+                  text: TextSpan(
+                      text: "An OTP has been sent to ",
+                      style: TextStyle(
+                          fontSize: 15.sp, fontWeight: FontWeight.bold),
+                      children: <TextSpan>[
+                        TextSpan(
+                          text: "${widget.data["email"]}",
+                          style: TextStyle(
+                              fontSize: 15.sp,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.lightBlue),
+                        ),
+                      ]),
                 ),
                 SizedBox(
                   height: 1.2.h,
@@ -72,7 +83,10 @@ class _OtpVerificationState extends State<OtpVerification> {
                   decoration: AuthTextFieldDecoration.copyWith(
                       hintText: "Enter OTP",
                       labelText: "OTP",
-                  ),
+                      suffix: GestureDetector(
+                        child: Text("Resend OTP"),
+                        onTap: sendOtp,
+                      )),
                 ),
                 SizedBox(
                   height: 1.2.h,
@@ -83,15 +97,29 @@ class _OtpVerificationState extends State<OtpVerification> {
                     color: Colors.blue,
                     onPressed: () async {
                       bool? isSuccess = verify();
-                      if (isSuccess==true) {
-                      var response = await dio.post(
-                        'http://10.0.2.2:8000/api/users/signup',
-                        data: widget.data,
-                      );
-                      if (response.statusCode == 201) {
-                        Navigator.of(context).pushNamed('/');
-                      }}
-                      },
+                      if (isSuccess == true) {
+                        try {
+                          var response = await dio.post(
+                            'http://10.0.2.2:8000/api/users/signup',
+                            data: widget.data,
+                            //     if (response.statusCode == 201) {
+                            //   Navigator.of(context).pushNamed('/');
+                            // }
+                          );
+                        } on DioError catch (error) {
+                          print(error.message);
+                        }
+                      } else {
+                        Fluttertoast.showToast(
+                          msg: "OTP verification failed",
+                          backgroundColor: Colors.red,
+                          textColor: Colors.white,
+                          gravity: ToastGravity.CENTER,
+                          timeInSecForIosWeb: 1,
+                          fontSize: 16.0,
+                        );
+                      }
+                    },
                     text: "Verify",
                   ),
                 ),
