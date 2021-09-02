@@ -214,15 +214,16 @@ class _LoginPageState extends State<LoginPage> with InputValidationMixin {
                                   Navigator.of(context).pushNamed('/dashboard');
                                 }
                               } on DioError catch (e) {
-                                Fluttertoast.showToast(
-                                  msg: e.message,
-                                  backgroundColor: Colors.red,
-                                  textColor: Colors.white,
-                                  gravity: ToastGravity.CENTER,
-                                  timeInSecForIosWeb: 1,
-                                  fontSize: 16.0,
+                                final snackBar = SnackBar(
+                                  backgroundColor: Colors.lightBlue,
+                                  duration: Duration(seconds: 8),
+                                  content: Text(
+                                    "Failed to authenticate!",
+                                    style: TextStyle(color: Colors.white),
+                                  ),
                                 );
-                                print(e.response);
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(snackBar);
                               }
                             }
                             // else{ Navigator.of(context).pushNamed('/dashboard');}

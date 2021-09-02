@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:crews_net_app/components/Auth/rounded_button.dart';
 import 'package:sizer/sizer.dart';
 import 'package:dio/dio.dart';
+import 'dart:convert';
 
 class SignUpPage extends StatefulWidget {
   @override
@@ -201,17 +202,53 @@ class _SignUpPageState extends State<SignUpPage> with InputValidationMixin {
                         child: RoundedButton(
                           color: agree ? Colors.blue : Colors.grey,
                           onPressed: () async {
+                            final snackBar = SnackBar(
+                              backgroundColor: Colors.lightBlue,
+                              duration: Duration(seconds: 30),
+                              content: Text(
+                                "Attempting to create account",
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            );
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(snackBar);
                             if (agree &&
                                 signUpGlobalKey.currentState!.validate()) {
                               signUpGlobalKey.currentState!.save();
-                              var response = await dio.post(
-                                  'http://10.0.2.2:8000/api/users/signup',
-                                  data: {
-                                    'name': nameController.value.text,
-                                    'email': emailController.value.text,
-                                    'password': passwordController.value.text,
-                                  });
-                              print(response);
+                              try {
+                                var response = await dio.post(
+                                    'http://10.0.2.2:8000/api/users/signup',
+                                    data: {
+                                      'name': nameController.value.text,
+                                      'email': emailController.value.text,
+                                      'password': passwordController.value.text,
+                                    });
+
+                                final text =
+                                    "Verify account using link send to ${emailController.value.text}";
+                                final snackBar = SnackBar(
+                                  duration: Duration(seconds: 15),
+                                  content: Text(
+                                    text,
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                  backgroundColor: Colors.lightBlue,
+                                );
+                                ScaffoldMessenger.of(context)
+                                  ..removeCurrentSnackBar()
+                                  ..showSnackBar(snackBar);
+                                print(response);
+                              } on DioError catch (e) {
+                                final snackBar = SnackBar(
+                                    duration: Duration(seconds: 5),
+                                    backgroundColor: Colors.lightBlue,
+                                    content: Text(
+                                        "Error occurred! Try again later",
+                                        style: TextStyle(color: Colors.white)));
+                                ScaffoldMessenger.of(context)
+                                  ..removeCurrentSnackBar()
+                                  ..showSnackBar(snackBar);
+                              }
                             }
                           },
                           text: "SIGN UP",
