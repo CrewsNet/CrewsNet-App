@@ -204,7 +204,7 @@ class _SignUpPageState extends State<SignUpPage> with InputValidationMixin {
                           onPressed: () async {
                             final snackBar = SnackBar(
                               backgroundColor: Colors.lightBlue,
-                              duration: Duration(seconds: 30),
+                              duration: Duration(seconds: 5),
                               content: Text(
                                 "Attempting to create account",
                                 style: TextStyle(color: Colors.white),
@@ -239,15 +239,35 @@ class _SignUpPageState extends State<SignUpPage> with InputValidationMixin {
                                   ..showSnackBar(snackBar);
                                 print(response);
                               } on DioError catch (e) {
-                                final snackBar = SnackBar(
+                                final error =
+                                    json.decode(e.response.toString());
+                                print(error['error']['code'].runtimeType);
+                                if (error['error']['code'] == 11000) {
+                                  final snackBar2 = SnackBar(
                                     duration: Duration(seconds: 5),
                                     backgroundColor: Colors.lightBlue,
                                     content: Text(
-                                        "Error occurred! Try again later",
-                                        style: TextStyle(color: Colors.white)));
-                                ScaffoldMessenger.of(context)
-                                  ..removeCurrentSnackBar()
-                                  ..showSnackBar(snackBar);
+                                      "An account with the registered E-Mail exists",
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  );
+                                  ScaffoldMessenger.of(context)
+                                    ..removeCurrentSnackBar()
+                                    ..showSnackBar(snackBar2);
+                                } else {
+                                  final snackBar2 = SnackBar(
+                                    duration: Duration(seconds: 5),
+                                    backgroundColor: Colors.lightBlue,
+                                    content: Text(
+                                      "Error occurred! Try again later",
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  );
+                                  ScaffoldMessenger.of(context)
+                                    ..removeCurrentSnackBar()
+                                    ..showSnackBar(snackBar2);
+                                }
+
                               }
                             }
                           },

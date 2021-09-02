@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:crews_net_app/Utils/auth_validators.dart';
 import 'package:crews_net_app/components/Auth/Button.dart';
 import 'package:flutter/cupertino.dart';
@@ -22,6 +24,7 @@ class _LoginPageState extends State<LoginPage> with InputValidationMixin {
 
   bool agree = false;
   bool _obscureText = true;
+
   @override
   @override
   Widget build(BuildContext context) {
@@ -205,20 +208,25 @@ class _LoginPageState extends State<LoginPage> with InputValidationMixin {
                               loginGlobalKey.currentState!.save();
                               try {
                                 var response = await dio.post(
-                                    'http://10.0.2.2:8000/api/users/login',
-                                    data: {
-                                      'email': emailController.value.text,
-                                      'password': passwordController.value.text,
-                                    });
+                                  'http://10.0.2.2:8000/api/users/login',
+                                  data: {
+                                    'email': emailController.value.text,
+                                    'password': passwordController.value.text,
+                                  },
+                                  options: Options(
+                                    followRedirects: false,
+                                  ),
+                                );
                                 if (response.statusCode == 200) {
                                   Navigator.of(context).pushNamed('/dashboard');
                                 }
                               } on DioError catch (e) {
+                                final error = json.decode(e.response.toString());
                                 final snackBar = SnackBar(
                                   backgroundColor: Colors.lightBlue,
                                   duration: Duration(seconds: 8),
                                   content: Text(
-                                    "Failed to authenticate!",
+                                    error['message'],
                                     style: TextStyle(color: Colors.white),
                                   ),
                                 );
@@ -226,7 +234,6 @@ class _LoginPageState extends State<LoginPage> with InputValidationMixin {
                                     .showSnackBar(snackBar);
                               }
                             }
-                            // else{ Navigator.of(context).pushNamed('/dashboard');}
                           },
                           text: "LOG IN",
                         ),
