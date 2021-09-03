@@ -211,7 +211,7 @@ class _LoginPageState extends State<LoginPage> with InputValidationMixin {
                               loginGlobalKey.currentState!.save();
                               try {
                                 var response = await dio.post(
-                                  'http://10.0.2.2:8000/api/users/login',
+                                  'https://crewsnet-backend.herokuapp.com/api/users/login',
                                   data: {
                                     'email': emailController.value.text,
                                     'password': passwordController.value.text,
