@@ -11,7 +11,7 @@ class RouteGenerator {
     final args = settings.arguments;
     switch (settings.name) {
       case '/':
-        return MaterialPageRoute(builder: (_) => Preloader());
+        return MaterialPageRoute(builder: (_) => Dashboard());
       case '/signup':
         return MaterialPageRoute(builder: (_) => SignUpPage());
       case '/dashboard':
