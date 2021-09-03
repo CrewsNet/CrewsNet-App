@@ -26,6 +26,13 @@ class _DashDrawerState extends State<DashDrawer> {
     "Contests",
     "Saved",
   ];
+  List<String> routes = [
+    "/dashboard",
+    "/projects",
+    "/profile",
+    "/contests",
+    "/saved",
+  ];
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -73,6 +80,9 @@ class _DashDrawerState extends State<DashDrawer> {
                 itemCount: icons.length,
                 itemBuilder: (BuildContext context, items) {
                   return ListTile(
+                    onTap: (){
+                      Navigator.of(context).pushNamed(routes[items]);
+                    },
                     focusColor: Color.fromRGBO(71, 71, 71, 1),
                     leading: Icon(
                      icons[items],
