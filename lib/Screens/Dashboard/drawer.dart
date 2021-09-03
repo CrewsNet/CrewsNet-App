@@ -12,17 +12,31 @@ class DashDrawer extends StatefulWidget {
 }
 
 class _DashDrawerState extends State<DashDrawer> {
+  List<IconData> icons = [
+    Icons.menu,
+    FontAwesomeIcons.book,
+    FontAwesomeIcons.user,
+    FontAwesomeIcons.trophy,
+    FontAwesomeIcons.calendarCheck,
+  ];
+  List<String> title = [
+    "Feeds",
+    "Projects",
+    "Profile",
+    "Contests",
+    "Saved",
+  ];
   @override
   Widget build(BuildContext context) {
     return Drawer(
       child: Container(
         color: Colors.black,
-        child: ListView(
+        child: Column(
           children: [
             DrawerHeader(
               child: Center(
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     IconButton(
                       icon: Icon(
@@ -30,6 +44,9 @@ class _DashDrawerState extends State<DashDrawer> {
                         size: 35.0,
                       ),
                       onPressed: () => Navigator.of(context).pop(),
+                    ),
+                    SizedBox(
+                      width: 10.0,
                     ),
                     Text(
                       "CrewsNet",
@@ -49,82 +66,25 @@ class _DashDrawerState extends State<DashDrawer> {
                 color: Colors.white,
               ),
             ),
-            ListTile(
-              hoverColor: Color.fromRGBO(188, 111, 241, 1),
-              onTap: () {
-                // setState(() {
-                //   _selected=!_selected;
-                // });
-              },
-              selectedTileColor: Color.fromRGBO(71, 71, 71, 1),
-              focusColor: Color.fromRGBO(71, 71, 71, 1),
-              leading: Icon(
-                Icons.menu,
-                size: 25,
-              ),
-              title: Text(
-                "Feed",
-                style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.w500),
-              ),
-            ),
-            ListTile(
-              hoverColor: Colors.red,
-              onTap: () {
-                // setState(() {
-                //   _selected=!_selected;
-                // });
-              },
-              selectedTileColor: Color.fromRGBO(71, 71, 71, 1),
-              focusColor: Color.fromRGBO(71, 71, 71, 1),
-              leading: Icon(
-                FontAwesomeIcons.book,
-                size: 25,
-              ),
-              title: Text(
-                "Projects",
-                style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.w500),
-              ),
-            ),
-            ListTile(
-              hoverColor: Colors.red,
-              onTap: () {},
-              selectedTileColor: Color.fromRGBO(71, 71, 71, 1),
-              focusColor: Color.fromRGBO(71, 71, 71, 1),
-              leading: Icon(
-                FontAwesomeIcons.user,
-                size: 28,
-              ),
-              title: Text(
-                "Profile",
-                style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.w500),
-              ),
-            ),
-            ListTile(
-              hoverColor: Colors.red,
-              onTap: () {},
-              selectedTileColor: Color.fromRGBO(71, 71, 71, 1),
-              focusColor: Color.fromRGBO(71, 71, 71, 1),
-              leading: Icon(
-                FontAwesomeIcons.trophy,
-                size: 28,
-              ),
-              title: Text(
-                "Contests",
-                style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.w500),
-              ),
-            ),
-            ListTile(
-              hoverColor: Colors.red,
-              onTap: () {},
-              selectedTileColor: Color.fromRGBO(71, 71, 71, 1),
-              focusColor: Color.fromRGBO(71, 71, 71, 1),
-              leading: Icon(
-                FontAwesomeIcons.calendarCheck,
-                size: 28,
-              ),
-              title: Text(
-                "Saved Contests",
-                style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.w500),
+            Expanded(
+              child: ListView.builder(
+
+                scrollDirection: Axis.vertical,
+                itemCount: icons.length,
+                itemBuilder: (BuildContext context, items) {
+                  return ListTile(
+                    focusColor: Color.fromRGBO(71, 71, 71, 1),
+                    leading: Icon(
+                     icons[items],
+                      size: 25,
+                    ),
+                    title: Text(
+                      title[items],
+                      style:
+                          TextStyle(fontSize: 25.0, fontWeight: FontWeight.w500),
+                    ),
+                  );
+                },
               ),
             ),
             ListTile(
@@ -155,12 +115,14 @@ class _DashDrawerState extends State<DashDrawer> {
                 style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.w500),
               ),
             ),
-            SizedBox(height: 15.h,),
+            SizedBox(
+              height: 15.h,
+            ),
             ListTile(
-
               hoverColor: Colors.red,
-              onTap:  ()async{
-                final SharedPreferences preferences = await SharedPreferences.getInstance();
+              onTap: () async {
+                final SharedPreferences preferences =
+                    await SharedPreferences.getInstance();
                 preferences.remove('email');
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (BuildContext context) => LoginPage()));
