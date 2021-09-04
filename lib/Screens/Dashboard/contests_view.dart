@@ -98,7 +98,7 @@ class _ContestsState extends State<Contests> {
                     children: [
                       Positioned(
                         right: 3.8.w,
-                        bottom: 15.h,
+                        bottom: selected.contains(item) ? 15.h : 17.h,
                         child: IconButton(
                           onPressed: () {
                             setState(() {
@@ -107,10 +107,9 @@ class _ContestsState extends State<Contests> {
                               else
                                 selected.add(item);
                             });
-                            print(selected);
                           },
                           icon: Icon(
-                            FontAwesomeIcons.solidBookmark,
+                            selected.contains(item)?FontAwesomeIcons.solidBookmark:FontAwesomeIcons.bookmark,
                             size: 4.8.h,
                             color: selected.contains(item)
                                 ? Colors.blue
@@ -120,8 +119,8 @@ class _ContestsState extends State<Contests> {
                       ),
                       Container(
                         height: 20.h,
-                        padding:
-                            EdgeInsets.symmetric(vertical: 15, horizontal: 3.8.w),
+                        padding: EdgeInsets.symmetric(
+                            vertical: 15, horizontal: 3.8.w),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.start,
