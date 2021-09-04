@@ -211,19 +211,17 @@ class _LoginPageState extends State<LoginPage> with InputValidationMixin {
                               loginGlobalKey.currentState!.save();
                               try {
                                 var response = await dio.post(
-                                  'https://crewsnet-backend.herokuapp.com/api/users/login',
+                                  'http://10.0.2.2:8000/users/login',
                                   data: {
                                     'email': emailController.value.text,
                                     'password': passwordController.value.text,
                                   },
-                                  options: Options(
-                                    followRedirects: false,
-                                  ),
                                 );
                                 if (response.statusCode == 200) {
                                   Navigator.of(context).pushNamed('/dashboard');
                                 }
                               } on DioError catch (e) {
+                                print(e);
                                 final error = json.decode(e.response.toString());
                                 final snackBar = SnackBar(
                                   backgroundColor: Colors.lightBlue,

@@ -217,7 +217,7 @@ class _SignUpPageState extends State<SignUpPage> with InputValidationMixin {
                               signUpGlobalKey.currentState!.save();
                               try {
                                 var response = await dio.post(
-                                    'https://crewsnet-backend.herokuapp.com/api/users/signup',
+                                    'http://10.0.2.2:8000/users/signup',
                                     data: {
                                       'name': nameController.value.text,
                                       'email': emailController.value.text,

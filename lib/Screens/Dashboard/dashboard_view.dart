@@ -1,5 +1,3 @@
-// import 'package:crews_net_app/Screens/Auth/login_view.dart';
-// import 'package:crews_net_app/Screens/preloader.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:crews_net_app/Screens/Dashboard/drawer.dart';
