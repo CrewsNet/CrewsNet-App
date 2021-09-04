@@ -12,6 +12,8 @@ class Contests extends StatefulWidget {
 }
 
 class _ContestsState extends State<Contests> {
+  var selected = [];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,8 +55,7 @@ class _ContestsState extends State<Contests> {
                   contentPadding: EdgeInsets.all(1.2.h),
                   hintText: "Search..",
                   hintStyle: TextStyle(
-                      color: Color.fromRGBO(188, 111, 241, 1),
-                      fontSize: 2.4.h),
+                      color: Color.fromRGBO(188, 111, 241, 1), fontSize: 2.4.h),
                 ),
               ),
             ),
@@ -96,23 +97,34 @@ class _ContestsState extends State<Contests> {
                     children: [
                       Positioned(
                         right: 10,
-                        bottom: 140,
-                        child: SavedIcon(),
-                      ),
-                      ListTile(
-                        autofocus: true,
-                        focusColor: Colors.lightGreen,
-                        hoverColor: Colors.lightGreen,
-                        contentPadding: EdgeInsets.symmetric(
-                          vertical: 15.0,
-                          horizontal: 15.0,
+                        bottom: 110,
+                        child: IconButton(
+                          onPressed: (){
+                            setState(() {
+                              if (selected.contains(item))
+                                selected.remove(item);
+                              else
+                                selected.add(item);
+                            });
+                            print(selected);
+                          },
+                          icon: Icon(
+                            FontAwesomeIcons.solidBookmark,
+                            size: 40,
+                            color: selected.contains(item)
+                                ? Colors.blue
+                                : Colors.white,
+                          ),
                         ),
-                        title: Row(
+                      ),
+                      Container(
+                        padding: EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+                        child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
                                   "26",
@@ -124,54 +136,91 @@ class _ContestsState extends State<Contests> {
                                   "JUNE ",
                                   style: TextStyle(fontSize: 18.0),
                                 ),
+                                Container(
+                                  width: 89.w,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Text(
+                                        "Codechef",
+                                        style: TextStyle(
+                                            fontSize: 20.0,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white),
+                                      ),
+                                      Text(
+                                        "7AM-8PM",
+                                        style: TextStyle(
+                                            fontSize: 20.0, color: Colors.white),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Container(
+                                  width: 89.w,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        "www.codechef.com",
+                                        style: TextStyle(fontSize: 18.0),
+                                      ),
+                                      Text(
+                                        "Active",
+                                        style: TextStyle(fontSize: 18.0),
+                                      ),
+                                    ],
+                                  ),
+                                ),
                               ],
                             ),
                           ],
                         ),
-                        subtitle: Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    "Codechef",
-                                    style: TextStyle(
-                                        fontSize: 20.0,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white),
-                                  ),
-                                  Text(
-                                    "7AM-8PM",
-                                    style: TextStyle(
-                                        fontSize: 20.0, color: Colors.white),
-                                  ),
-                                ],
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      "www.codechef.com",
-                                      style: TextStyle(fontSize: 18.0),
-                                    ),
-                                    Text(
-                                      "Active",
-                                      style: TextStyle(fontSize: 18.0),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+                        // subtitle: Padding(
+                        //   padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+                        //   child: Column(
+                        //     crossAxisAlignment: CrossAxisAlignment.start,
+                        //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        //     children: [
+                        //       // Row(
+                        //       //   mainAxisAlignment:
+                        //       //       MainAxisAlignment.spaceBetween,
+                        //       //   children: [
+                        //       //     Text(
+                        //       //       "Codechef",
+                        //       //       style: TextStyle(
+                        //       //           fontSize: 20.0,
+                        //       //           fontWeight: FontWeight.bold,
+                        //       //           color: Colors.white),
+                        //       //     ),
+                        //       //     Text(
+                        //       //       "7AM-8PM",
+                        //       //       style: TextStyle(
+                        //       //           fontSize: 20.0, color: Colors.white),
+                        //       //     ),
+                        //       //   ],
+                        //       // ),
+                        //       // Padding(
+                        //       //   padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                        //       //   child: Row(
+                        //       //     mainAxisAlignment:
+                        //       //         MainAxisAlignment.spaceBetween,
+                        //       //     children: [
+                        //       //       Text(
+                        //       //         "www.codechef.com",
+                        //       //         style: TextStyle(fontSize: 18.0),
+                        //       //       ),
+                        //       //       Text(
+                        //       //         "Active",
+                        //       //         style: TextStyle(fontSize: 18.0),
+                        //       //       ),
+                        //       //     ],
+                        //       //   ),
+                        //       // ),
+                        //     ],
+                        //   ),
+                        // ),
                       ),
                     ],
                   ),
@@ -186,29 +235,3 @@ class _ContestsState extends State<Contests> {
   }
 }
 
-class SavedIcon extends StatefulWidget {
-  const SavedIcon({Key? key}) : super(key: key);
-
-  @override
-  _SavedIconState createState() => _SavedIconState();
-}
-
-class _SavedIconState extends State<SavedIcon> {
-  bool _isSaved = false;
-  @override
-  Widget build(BuildContext context) {
-    return IconButton(
-      onPressed: () {
-        setState(() {
-          _isSaved = !_isSaved;
-          print(!_isSaved);
-        });
-      },
-      icon: Icon(
-        FontAwesomeIcons.bookmark,
-        color: _isSaved ? Colors.blue : Colors.white,
-        size: 40,
-      ),
-    );
-  }
-}
