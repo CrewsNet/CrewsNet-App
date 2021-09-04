@@ -7,6 +7,7 @@ import 'package:crews_net_app/components/Auth/rounded_button.dart';
 import 'package:sizer/sizer.dart';
 import 'package:dio/dio.dart';
 import 'dart:convert';
+import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 
 class SignUpPage extends StatefulWidget {
   @override
@@ -216,6 +217,11 @@ class _SignUpPageState extends State<SignUpPage> with InputValidationMixin {
                                 signUpGlobalKey.currentState!.validate()) {
                               signUpGlobalKey.currentState!.save();
                               try {
+                                // Loader.show(
+                                //   context,
+                                //   progressIndicator:
+                                //       CircularProgressIndicator(),
+                                // );
                                 var response = await dio.post(
                                     'http://10.0.2.2:8000/users/signup',
                                     data: {
@@ -223,6 +229,7 @@ class _SignUpPageState extends State<SignUpPage> with InputValidationMixin {
                                       'email': emailController.value.text,
                                       'password': passwordController.value.text,
                                     });
+                                // Loader.hide();
 
                                 final text =
                                     "Verify account using link send to ${emailController.value.text}";
@@ -239,6 +246,8 @@ class _SignUpPageState extends State<SignUpPage> with InputValidationMixin {
                                   ..showSnackBar(snackBar);
                                 print(response);
                               } on DioError catch (e) {
+                                print(e);
+                                // Loader.hide();
                                 final error =
                                     json.decode(e.response.toString());
                                 print(error['error']['code'].runtimeType);
@@ -267,7 +276,6 @@ class _SignUpPageState extends State<SignUpPage> with InputValidationMixin {
                                     ..removeCurrentSnackBar()
                                     ..showSnackBar(snackBar2);
                                 }
-
                               }
                             }
                           },
