@@ -177,50 +177,6 @@ class _ContestsState extends State<Contests> {
                             ),
                           ],
                         ),
-                        // subtitle: Padding(
-                        //   padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-                        //   child: Column(
-                        //     crossAxisAlignment: CrossAxisAlignment.start,
-                        //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        //     children: [
-                        //       // Row(
-                        //       //   mainAxisAlignment:
-                        //       //       MainAxisAlignment.spaceBetween,
-                        //       //   children: [
-                        //       //     Text(
-                        //       //       "Codechef",
-                        //       //       style: TextStyle(
-                        //       //           fontSize: 20.0,
-                        //       //           fontWeight: FontWeight.bold,
-                        //       //           color: Colors.white),
-                        //       //     ),
-                        //       //     Text(
-                        //       //       "7AM-8PM",
-                        //       //       style: TextStyle(
-                        //       //           fontSize: 20.0, color: Colors.white),
-                        //       //     ),
-                        //       //   ],
-                        //       // ),
-                        //       // Padding(
-                        //       //   padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                        //       //   child: Row(
-                        //       //     mainAxisAlignment:
-                        //       //         MainAxisAlignment.spaceBetween,
-                        //       //     children: [
-                        //       //       Text(
-                        //       //         "www.codechef.com",
-                        //       //         style: TextStyle(fontSize: 18.0),
-                        //       //       ),
-                        //       //       Text(
-                        //       //         "Active",
-                        //       //         style: TextStyle(fontSize: 18.0),
-                        //       //       ),
-                        //       //     ],
-                        //       //   ),
-                        //       // ),
-                        //     ],
-                        //   ),
-                        // ),
                       ),
                     ],
                   ),
