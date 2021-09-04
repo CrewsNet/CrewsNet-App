@@ -89,17 +89,18 @@ class _ContestsState extends State<Contests> {
             delegate: SliverChildBuilderDelegate(
               (BuildContext context, int item) {
                 return Card(
-                  margin: EdgeInsets.all(8.0),
+                  margin: EdgeInsets.all(1.h),
                   elevation: 2.0,
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0)),
+                    borderRadius: BorderRadius.circular(2.4.h),
+                  ),
                   child: Stack(
                     children: [
                       Positioned(
-                        right: 10,
-                        bottom: 110,
+                        right: 3.8.w,
+                        bottom: 15.h,
                         child: IconButton(
-                          onPressed: (){
+                          onPressed: () {
                             setState(() {
                               if (selected.contains(item))
                                 selected.remove(item);
@@ -110,7 +111,7 @@ class _ContestsState extends State<Contests> {
                           },
                           icon: Icon(
                             FontAwesomeIcons.solidBookmark,
-                            size: 40,
+                            size: 4.8.h,
                             color: selected.contains(item)
                                 ? Colors.blue
                                 : Colors.white,
@@ -118,9 +119,12 @@ class _ContestsState extends State<Contests> {
                         ),
                       ),
                       Container(
-                        padding: EdgeInsets.symmetric(vertical: 15, horizontal: 15),
-                        child: Row(
+                        height: 20.h,
+                        padding:
+                            EdgeInsets.symmetric(vertical: 15, horizontal: 3.8.w),
+                        child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -129,49 +133,42 @@ class _ContestsState extends State<Contests> {
                                 Text(
                                   "26",
                                   style: TextStyle(
-                                      fontSize: 38.0,
+                                      fontSize: 29.sp,
                                       fontWeight: FontWeight.bold),
                                 ),
                                 Text(
                                   "JUNE ",
-                                  style: TextStyle(fontSize: 18.0),
+                                  style: TextStyle(fontSize: 13.7.sp),
                                 ),
-                                Container(
-                                  width: 89.w,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      Text(
-                                        "Codechef",
-                                        style: TextStyle(
-                                            fontSize: 20.0,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white),
-                                      ),
-                                      Text(
-                                        "7AM-8PM",
-                                        style: TextStyle(
-                                            fontSize: 20.0, color: Colors.white),
-                                      ),
-                                    ],
-                                  ),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Codechef",
+                                  style: TextStyle(
+                                      fontSize: 15.2.sp,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white),
                                 ),
-                                Container(
-                                  width: 89.w,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        "www.codechef.com",
-                                        style: TextStyle(fontSize: 18.0),
-                                      ),
-                                      Text(
-                                        "Active",
-                                        style: TextStyle(fontSize: 18.0),
-                                      ),
-                                    ],
-                                  ),
+                                Text(
+                                  "7AM-8PM",
+                                  style: TextStyle(
+                                      fontSize: 15.2.sp, color: Colors.white),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "www.codechef.com",
+                                  style: TextStyle(fontSize: 13.74.sp),
+                                ),
+                                Text(
+                                  "Active",
+                                  style: TextStyle(fontSize: 13.74.sp),
                                 ),
                               ],
                             ),
@@ -190,4 +187,3 @@ class _ContestsState extends State<Contests> {
     );
   }
 }
-
