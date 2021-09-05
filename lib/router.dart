@@ -7,6 +7,7 @@ import 'Screens/Dashboard/contests_view.dart';
 import 'Screens/Dashboard/dashboard_view.dart';
 import 'Screens/Dashboard/profile_view.dart';
 import 'Screens/Dashboard/project_view.dart';
+import 'Screens/Dashboard/saved_view.dart';
 import 'Screens/PageNotFound.dart';
 
 class RouteGenerator {
@@ -25,6 +26,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => Profile());
       case '/contests':
         return MaterialPageRoute(builder: (_) => Contests());
+      case '/saved':
+        return MaterialPageRoute(builder: (_) => Saved());
       default:
         return MaterialPageRoute(builder: (_) => PageNotFound());
     }
