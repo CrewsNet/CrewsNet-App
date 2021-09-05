@@ -12,8 +12,10 @@ import 'package:crews_net_app/components/Auth/rounded_button.dart';
 import 'package:sizer/sizer.dart';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 
 String? finalEmail = "";
+
 class LoginPage extends StatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -210,6 +212,12 @@ class _LoginPageState extends State<LoginPage> with InputValidationMixin {
                             if (loginGlobalKey.currentState!.validate()) {
                               loginGlobalKey.currentState!.save();
                               try {
+                                Loader.show(
+                                  context,
+                                  progressIndicator:
+                                      CircularProgressIndicator(),
+                                );
+
                                 var response = await dio.post(
                                   'http://10.0.2.2:8000/users/login',
                                   data: {
@@ -217,12 +225,15 @@ class _LoginPageState extends State<LoginPage> with InputValidationMixin {
                                     'password': passwordController.value.text,
                                   },
                                 );
+                                Loader.hide();
                                 if (response.statusCode == 200) {
                                   Navigator.of(context).pushNamed('/dashboard');
                                 }
                               } on DioError catch (e) {
+                                Loader.hide();
                                 print(e);
-                                final error = json.decode(e.response.toString());
+                                final error =
+                                    json.decode(e.response.toString());
                                 final snackBar = SnackBar(
                                   backgroundColor: Colors.lightBlue,
                                   duration: Duration(seconds: 8),
@@ -276,6 +287,7 @@ class _LoginPageState extends State<LoginPage> with InputValidationMixin {
     );
   }
 }
+
 class Preloader extends StatefulWidget {
   const Preloader({Key? key}) : super(key: key);
 
@@ -299,9 +311,9 @@ class _PreloaderState extends State<Preloader> {
       Timer(Duration(seconds: 1), () {
         finalEmail == null
             ? Navigator.of(context).push(MaterialPageRoute(
-            builder: (BuildContext context) => LoginPage()))
+                builder: (BuildContext context) => LoginPage()))
             : Navigator.of(context).push(MaterialPageRoute(
-            builder: (BuildContext context) => Dashboard()));
+                builder: (BuildContext context) => Dashboard()));
       });
     });
     super.initState();
