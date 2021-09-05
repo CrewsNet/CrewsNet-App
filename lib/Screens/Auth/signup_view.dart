@@ -217,11 +217,11 @@ class _SignUpPageState extends State<SignUpPage> with InputValidationMixin {
                                 signUpGlobalKey.currentState!.validate()) {
                               signUpGlobalKey.currentState!.save();
                               try {
-                                // Loader.show(
-                                //   context,
-                                //   progressIndicator:
-                                //       CircularProgressIndicator(),
-                                // );
+                                Loader.show(
+                                  context,
+                                  progressIndicator:
+                                      CircularProgressIndicator(),
+                                );
                                 var response = await dio.post(
                                     'http://10.0.2.2:8000/users/signup',
                                     data: {
@@ -229,7 +229,7 @@ class _SignUpPageState extends State<SignUpPage> with InputValidationMixin {
                                       'email': emailController.value.text,
                                       'password': passwordController.value.text,
                                     });
-                                // Loader.hide();
+                                Loader.hide();
 
                                 final text =
                                     "Verify account using link send to ${emailController.value.text}";
@@ -247,7 +247,7 @@ class _SignUpPageState extends State<SignUpPage> with InputValidationMixin {
                                 print(response);
                               } on DioError catch (e) {
                                 print(e);
-                                // Loader.hide();
+                                Loader.hide();
                                 final error =
                                     json.decode(e.response.toString());
                                 print(error['error']['code'].runtimeType);
