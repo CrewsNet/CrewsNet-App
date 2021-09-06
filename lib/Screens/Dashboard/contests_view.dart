@@ -109,7 +109,7 @@ void getContests() async {
                     children: [
                       Positioned(
                         right: 3.8.w,
-                        bottom: selected.contains(item) ? 15.h : 17.h,
+                        bottom: selected.contains(item) ? 15.h : 16.5.h,
                         child: IconButton(
                           onPressed: () {
                             setState(() {
