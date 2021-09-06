@@ -1,6 +1,6 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:intl/intl.dart';
 import 'package:sizer/sizer.dart';
 import 'drawer.dart';
 
@@ -13,8 +13,20 @@ class Contests extends StatefulWidget {
 
 class _ContestsState extends State<Contests> {
   var selected = [];
-
+  var contests = [];
+void getContests() async {
+  try {
+    var response = await Dio().get('https://crewsnet-backend.herokuapp.com/user/contests');
+    contests = response.data["data"];
+  } catch (e) {
+    print(e);
+  }
+}
   @override
+  void initState() {
+    getContests();
+    super.initState();
+  }
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
@@ -45,7 +57,6 @@ class _ContestsState extends State<Contests> {
                 keyboardAppearance: Brightness.light,
                 textAlign: TextAlign.start,
                 decoration: InputDecoration(
-                  // enabled: false,
                   border: OutlineInputBorder(borderSide: BorderSide.none),
                   suffixIcon: Icon(
                     FontAwesomeIcons.search,
@@ -145,7 +156,7 @@ class _ContestsState extends State<Contests> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  "Codechef",
+                                  contests[item]["name"],
                                   style: TextStyle(
                                       fontSize: 15.2.sp,
                                       fontWeight: FontWeight.bold,
@@ -154,22 +165,13 @@ class _ContestsState extends State<Contests> {
                                 Text(
                                   "7AM-8PM",
                                   style: TextStyle(
-                                      fontSize: 15.2.sp, color: Colors.white),
+                                      fontSize: 14.2.sp, color: Colors.white),
                                 ),
                               ],
                             ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "www.codechef.com",
-                                  style: TextStyle(fontSize: 13.74.sp),
-                                ),
-                                Text(
-                                  "Active",
-                                  style: TextStyle(fontSize: 13.74.sp),
-                                ),
-                              ],
+                            Text(
+                              contests[item]['url'],
+                              style: TextStyle(fontSize: 10.sp),
                             ),
                           ],
                         ),
