@@ -1,6 +1,6 @@
-# crews_net_app
+# crewsnet
 
-A new Flutter application.
+A new Flutter project.
 
 ## Getting Started
 

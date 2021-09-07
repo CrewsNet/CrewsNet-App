@@ -8,16 +8,20 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:crews_net_app/constants.dart';
 import 'package:crews_net_app/components/Auth/rounded_button.dart';
-import 'package:oauth2_client/access_token_response.dart';
-import 'package:oauth2_client/oauth2_helper.dart';
 
 import 'package:sizer/sizer.dart';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
-import 'package:oauth2_client/oauth2_client.dart';
-import 'package:oauth2_client/google_oauth2_client.dart';
-import 'package:http/http.dart' as http;
+import 'package:google_sign_in/google_sign_in.dart';
+
+GoogleSignIn _googleSignIn = GoogleSignIn(
+  scopes: [
+    'profile',
+    "https://www.googleapis.com/auth/userinfo.profile",
+    "email"
+  ],
+);
 
 String? finalEmail = "";
 
@@ -28,33 +32,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> with InputValidationMixin {
   Dio dio = Dio();
-  //AUTH
-  GoogleOAuth2Client client = GoogleOAuth2Client(
-    customUriScheme: 'com.example.crews_net_app',
-    redirectUri:
-        "http://crewsnet-backend.herokuapp.com/urn:ietf:wg:oauth:2.0:oob",
-  );
-  Future<void> googleLogin() async {
-    // AccessTokenResponse tknResp = await client
-    //     .getTokenWithClientCredentialsFlow(
-    //         clientId:
-    //             '208050857931-t09e1tk1rp04r31gj51bgiugt5uih0rp.apps.googleusercontent.com', //Your client id
-    //         clientSecret: '', //Your client secret
-    //         scopes: ['profile'] //Optional
-    //         );
-    AccessTokenResponse tknResp = await client.getTokenWithAuthCodeFlow(
-        clientId:
-            '208050857931-t09e1tk1rp04r31gj51bgiugt5uih0rp.apps.googleusercontent.com',
-        scopes: ['profile']);
-    print(tknResp);
-    try {
-      var response = await dio.post('http://10.0.2.2:8000/users/auth/google',
-          data: {"idToken": tknResp.accessToken});
-    } on DioError catch (err) {
-      print(err);
-    }
-  }
-
+  GoogleSignInAccount? _currentUser;
   final loginGlobalKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -63,6 +41,16 @@ class _LoginPageState extends State<LoginPage> with InputValidationMixin {
   bool _obscureText = true;
 
   @override
+  void initState() {
+    super.initState();
+    _googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount? account) {
+      setState(() {
+        _currentUser = account;
+      });
+    });
+    _googleSignIn.signInSilently();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -115,26 +103,20 @@ class _LoginPageState extends State<LoginPage> with InputValidationMixin {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Button(
-                                onPressed: () {
-                                  setState(() {
-                                    googleLogin();
-                                  });
-                                },
-                                imageUrl: "assets/images/google.png",
-                                height: 9.h,
-                                width: 23.w,
-                                color: Colors.yellow,
+                              ElevatedButton(
+                                onPressed: _handleSignIn,
+                                child: Image.asset(
+                                  "assets/images/google.png",
+                                  height: 9.h,
+                                ),
                               ),
-                              Button(
-                                onPressed: () {
-                                  print("HELEL");
-                                },
-                                imageUrl: "assets/images/GitHub-Icon.png",
-                                height: 9.h,
-                                width: 23.w,
-                                color: Colors.redAccent,
-                              )
+                              ElevatedButton(
+                                onPressed: _handleSignOut,
+                                child: Image.asset(
+                                  "assets/images/google.png",
+                                  height: 9.h,
+                                ),
+                              ),
                             ],
                           ),
                         ),
@@ -340,7 +322,6 @@ class _PreloaderState extends State<Preloader> {
     setState(() {
       finalEmail = obtainedEmail;
     });
-    print(finalEmail);
   }
 
   @override
@@ -360,5 +341,27 @@ class _PreloaderState extends State<Preloader> {
   @override
   Widget build(BuildContext context) {
     return Center(child: CircularProgressIndicator());
+  }
+}
+
+Future<void> _handleSignIn() async {
+  try {
+    Dio dio = Dio();
+    final result = await _googleSignIn.signIn();
+    final ggAuth = await result?.authentication;
+    var response =
+        await dio.post('http://10.0.2.2:8000/users/auth/google', data: {
+      'tokenId': ggAuth?.idToken,
+    });
+  } on DioError catch (e) {
+    print(e);
+  }
+}
+
+Future<void> _handleSignOut() async {
+  try {
+    _googleSignIn.disconnect();
+  } catch (e) {
+    print(e);
   }
 }
