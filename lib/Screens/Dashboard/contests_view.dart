@@ -1,10 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:intl/intl.dart';
 import 'package:sizer/sizer.dart';
 import 'drawer.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class Contests extends StatefulWidget {
   const Contests({Key? key}) : super(key: key);
@@ -14,48 +12,22 @@ class Contests extends StatefulWidget {
 }
 
 class _ContestsState extends State<Contests> {
-  Future<void> _launchInBrowser(String url) async {
-    if (await canLaunch(url)) {
-      await launch(
-        url,
-        forceSafariVC: false,
-        forceWebView: false,
-        headers: <String, String>{'my_header_key': 'my_header_value'},
-      );
-    } else {
-      throw 'Could not launch $url';
-    }
-  }
-
   var selected = [];
   var contests = [];
-  void getContests() async {
-    try {
-      var response = await Dio()
-          .get('https://crewsnet-backend.herokuapp.com/user/contests');
-      contests = response.data["data"];
-    } catch (e) {
-      print(e);
-    }
+void getContests() async {
+  try {
+    var response = await Dio().get('https://crewsnet-backend.herokuapp.com/user/contests');
+    contests = response.data["data"];
+  } catch (e) {
+    print(e);
   }
-
+}
   @override
   void initState() {
     getContests();
     super.initState();
   }
-
-
-
-  getCustomFormattedDateTime(String givenDateTime, String dateFormat) {
-    // dateFormat = 'MM/dd/yy';
-    final DateTime docDateTime = DateTime.parse(givenDateTime);
-    return DateFormat(dateFormat).format(docDateTime);
-  }
-
   Widget build(BuildContext context) {
-    print(contests);
-    print(DateTime.now());
     return Scaffold(
       backgroundColor: Colors.black,
       drawer: DashDrawer(),
@@ -127,7 +99,6 @@ class _ContestsState extends State<Contests> {
           SliverList(
             delegate: SliverChildBuilderDelegate(
               (BuildContext context, int item) {
-                var contest = contests[item];
                 return Card(
                   margin: EdgeInsets.all(1.h),
                   elevation: 2.0,
@@ -138,7 +109,7 @@ class _ContestsState extends State<Contests> {
                     children: [
                       Positioned(
                         right: 3.8.w,
-                        bottom: selected.contains(item) ? 18.h : 19.5.h,
+                        bottom: selected.contains(item) ? 15.h : 16.5.h,
                         child: IconButton(
                           onPressed: () {
                             setState(() {
@@ -149,9 +120,7 @@ class _ContestsState extends State<Contests> {
                             });
                           },
                           icon: Icon(
-                            selected.contains(item)
-                                ? FontAwesomeIcons.solidBookmark
-                                : FontAwesomeIcons.bookmark,
+                            selected.contains(item)?FontAwesomeIcons.solidBookmark:FontAwesomeIcons.bookmark,
                             size: 4.8.h,
                             color: selected.contains(item)
                                 ? Colors.blue
@@ -160,7 +129,7 @@ class _ContestsState extends State<Contests> {
                         ),
                       ),
                       Container(
-                        height: 23.5.h,
+                        height: 20.h,
                         padding: EdgeInsets.symmetric(
                             vertical: 15, horizontal: 3.8.w),
                         child: Column(
@@ -171,75 +140,38 @@ class _ContestsState extends State<Contests> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                getCustomFormattedDateTime(
-                                            contest['start_time'], 'dd/yy') ==
-                                        getCustomFormattedDateTime(
-                                            contest['end_time'], 'dd/yy')
-                                    ? Text(
-                                        getCustomFormattedDateTime(
-                                            contest['start_time'], 'dd/yyyy'),
-                                        style: TextStyle(
-                                            fontSize: 25.sp,
-                                            fontWeight: FontWeight.bold),
-                                      )
-                                    : Text(
-                                        "${getCustomFormattedDateTime(contest['start_time'], 'dd/yyyy')}-${getCustomFormattedDateTime(contest['end_time'], 'dd/yyyy')}",
-                                        style: TextStyle(
-                                            fontSize: 25.sp,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                getCustomFormattedDateTime(
-                                            contest['start_time'], 'dd/yy') ==
-                                        getCustomFormattedDateTime(
-                                            contest['end_time'], 'dd/yy')
-                                    ? Text(
-                                        getCustomFormattedDateTime(
-                                            contest['start_time'], 'MMMM'),
-                                        style: TextStyle(fontSize: 13.7.sp),
-                                      )
-                                    : Text(
-                                        "${getCustomFormattedDateTime(contest['start_time'], 'MMMM')}-${getCustomFormattedDateTime(contest['end_time'], 'MMMM')}",
-                                        style: TextStyle(fontSize: 13.7.sp),
-                                      ),
+                                Text(
+                                  "26",
+                                  style: TextStyle(
+                                      fontSize: 29.sp,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Text(
+                                  "JUNE ",
+                                  style: TextStyle(fontSize: 13.7.sp),
+                                ),
                               ],
                             ),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  contest['name'],
+                                  contests[item]["name"],
                                   style: TextStyle(
-                                      fontSize: 13.sp,
+                                      fontSize: 15.2.sp,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white),
                                 ),
-                                SizedBox(
-                                  height: 1.h,
+                                Text(
+                                  "7AM-8PM",
+                                  style: TextStyle(
+                                      fontSize: 14.2.sp, color: Colors.white),
                                 ),
-                                getCustomFormattedDateTime(
-                                            contest['start_time'], 'dd/yy') ==
-                                        getCustomFormattedDateTime(
-                                            contest['end_time'], 'dd/yy')
-                                    ? Text(
-                                        "${getCustomFormattedDateTime(contest['start_time'], 'HH:mm')}-${getCustomFormattedDateTime(contest['end_time'], 'HH:mm')}",
-                                        style: TextStyle(fontSize: 13.sp),
-                                      )
-                                    : Text(""),
                               ],
                             ),
-                            GestureDetector(
-                              behavior: HitTestBehavior.deferToChild,
-                              onTap: () {
-                                _launchInBrowser(contest['url']);
-                              },
-                              child: Text(
-                                "Click here for more info",
-                                style: TextStyle(
-                                    fontSize: 10.sp,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.blue),
-                              ),
+                            Text(
+                              contests[item]['url'],
+                              style: TextStyle(fontSize: 10.sp),
                             ),
                           ],
                         ),
@@ -248,7 +180,7 @@ class _ContestsState extends State<Contests> {
                   ),
                 );
               },
-              childCount: contests.length,
+              childCount: 8,
             ),
           ),
         ],
