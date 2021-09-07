@@ -6,16 +6,16 @@ class Button extends StatelessWidget {
   final double height;
   final double width;
   final Color color;
+  final Function onPressed;
 
-
-  const Button(
-      {Key? key,
-      required this.imageUrl,
-      required this.height,
-      required this.width,
-      required this.color,
-      })
-      : super(key: key);
+  const Button({
+    Key? key,
+    required this.imageUrl,
+    required this.height,
+    required this.width,
+    required this.color,
+    required this.onPressed,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +32,9 @@ class Button extends StatelessWidget {
         backgroundColor:
             MaterialStateProperty.all(Color.fromRGBO(71, 71, 71, 1)),
       ),
-      onPressed: (){},
+      onPressed: () {
+        onPressed();
+      },
       child: Container(
         width: this.width,
         height: this.height,

@@ -75,12 +75,18 @@ class _SignUpPageState extends State<SignUpPage> with InputValidationMixin {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Button(
+                                onPressed: () {
+                                  print("HELEL");
+                                },
                                 imageUrl: "assets/images/google.png",
                                 height: 9.h,
                                 width: 23.w,
                                 color: Colors.yellow,
                               ),
                               Button(
+                                onPressed: () {
+                                  print("HELEL");
+                                },
                                 imageUrl: "assets/images/GitHub-Icon.png",
                                 height: 9.h,
                                 width: 23.w,
