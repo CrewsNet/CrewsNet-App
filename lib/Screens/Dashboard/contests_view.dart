@@ -29,16 +29,15 @@ class _ContestsState extends State<Contests> {
 
   var selected = [];
   var contests = [];
-  void getContests() async {
+  Future<List> getContests() async {
     try {
       var response = await Dio()
           .get('https://crewsnet-backend.herokuapp.com/user/contest');
-      setState(() {
-        contests = response.data["data"];
-      });
+      contests = response.data["data"];
     } catch (e) {
       print(e);
     }
+    return contests;
   }
 
   @override
@@ -47,7 +46,6 @@ class _ContestsState extends State<Contests> {
     super.initState();
   }
 
-
   getCustomFormattedDateTime(String givenDateTime, String dateFormat) {
     // dateFormat = 'MM/dd/yy';
     final DateTime docDateTime = DateTime.parse(givenDateTime);
@@ -55,7 +53,8 @@ class _ContestsState extends State<Contests> {
   }
 
   Widget build(BuildContext context) {
-    print(DateTime.now());
+
+
     return Scaffold(
       backgroundColor: Colors.black,
       drawer: DashDrawer(),
@@ -124,135 +123,173 @@ class _ContestsState extends State<Contests> {
               ],
             ),
           ),
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-                  (BuildContext context, int item) {
-                var contest = contests[item];
-                return Card(
-                  margin: EdgeInsets.all(1.h),
-                  elevation: 2.0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(2.4.h),
-                  ),
-                  child: Stack(
+          SliverToBoxAdapter(
+            child: FutureBuilder(
+              future: getContests(),
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Stack(
                     children: [
-                      Positioned(
-                        right: 3.8.w,
-                        bottom: selected.contains(item) ? 18.h : 19.5.h,
-                        child: IconButton(
-                          onPressed: () {
-                            setState(() {
-                              if (selected.contains(item))
-                                selected.remove(item);
-                              else
-                                selected.add(item);
-                            });
-                          },
-                          icon: Icon(
-                            selected.contains(item)
-                                ? FontAwesomeIcons.solidBookmark
-                                : FontAwesomeIcons.bookmark,
-                            size: 4.8.h,
-                            color: selected.contains(item)
-                                ? Colors.blue
-                                : Colors.white,
+                      Padding(
+                        padding:EdgeInsets.fromLTRB(0,20.h,0,0),
+                        child: Center(
+                          child: Container(
+
+                            child: CircularProgressIndicator(),
                           ),
                         ),
                       ),
-                      Container(
-                        height: 23.h,
-                        padding: EdgeInsets.symmetric(
-                            vertical: 15, horizontal: 3.8.w),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                getCustomFormattedDateTime(
-                                    contest['start_time'], 'dd/yy') ==
-                                    getCustomFormattedDateTime(
-                                        contest['end_time'], 'dd/yy')
-                                    ? Text(
-                                  getCustomFormattedDateTime(
-                                      contest['start_time'], 'dd/yyyy'),
-                                  style: TextStyle(
-                                      fontSize: 25.sp,
-                                      fontWeight: FontWeight.bold),
-                                )
-                                    : Text(
-                                  "${getCustomFormattedDateTime(contest['start_time'], 'dd/yyyy')}-${getCustomFormattedDateTime(contest['end_time'], 'dd/yyyy')}",
-                                  style: TextStyle(
-                                      fontSize: 25.sp,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                getCustomFormattedDateTime(
-                                    contest['start_time'], 'dd/yy') ==
-                                    getCustomFormattedDateTime(
-                                        contest['end_time'], 'dd/yy')
-                                    ? Text(
-                                  getCustomFormattedDateTime(
-                                      contest['start_time'], 'MMMM'),
-                                  style: TextStyle(fontSize: 13.7.sp),
-                                )
-                                    : Text(
-                                  "${getCustomFormattedDateTime(contest['start_time'], 'MMMM')}-${getCustomFormattedDateTime(contest['end_time'], 'MMMM')}",
-                                  style: TextStyle(fontSize: 13.7.sp),
-                                ),
-                              ],
-                            ),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  contest['name'],
-                                  style: TextStyle(
-                                      fontSize: 13.sp,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white),
-                                ),
-                                SizedBox(
-                                  height: 1.h,
-                                ),
-                                getCustomFormattedDateTime(
-                                    contest['start_time'], 'dd/yy') ==
-                                    getCustomFormattedDateTime(
-                                        contest['end_time'], 'dd/yy')
-                                    ? Text(
-                                  "${getCustomFormattedDateTime(contest['start_time'], 'HH:mm')}-${getCustomFormattedDateTime(contest['end_time'], 'HH:mm')}",
-                                  style: TextStyle(fontSize: 13.sp),
-                                )
-                                    : Text(""),
-                              ],
-                            ),
-                            GestureDetector(
-                              behavior: HitTestBehavior.deferToChild,
-                              onTap: () {
-                                _launchInBrowser(contest['url']);
-                              },
-                              child: Text(
-                                "Click here for more info",
-                                style: TextStyle(
-                                    fontSize: 10.sp,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.blue),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
                     ],
-                  ),
-                );
+                  );
+                } else if (snapshot.connectionState == ConnectionState.done) {
+                  if (snapshot.hasError) {
+                    return const Text('Error');
+                  } else if (snapshot.hasData) {
+                    return _ContestData(context, snapshot.data.toList());
+                  } else {
+                    return const Text('Empty data');
+                  }
+                } else {
+                  return Text('State: ${snapshot.connectionState}');
+                }
               },
-              childCount: contests.length,
             ),
           ),
         ],
       ),
+    );
+  }
+
+  Widget _ContestData(BuildContext context, List contests) {
+    return MediaQuery.removePadding(
+      context: context,
+      removeTop: true,
+      child: ListView.builder(
+          scrollDirection: Axis.vertical,
+          shrinkWrap: true,
+          itemCount: contests.length,
+          itemBuilder: (context, int item) {
+            var contest = contests[item];
+            return Card(
+              margin: EdgeInsets.all(1.h),
+              elevation: 2.0,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(2.4.h),
+              ),
+              child: Stack(
+                children: [
+                  Positioned(
+                    right: 3.8.w,
+                    bottom: selected.contains(item) ? 19.h : 20.5.h,
+                    child: IconButton(
+                      onPressed: () {
+                        setState(() {
+                          if (selected.contains(item))
+                            selected.remove(item);
+                          else
+                            selected.add(item);
+                        });
+                      },
+                      icon: Icon(
+                        selected.contains(item)
+                            ? FontAwesomeIcons.solidBookmark
+                            : FontAwesomeIcons.bookmark,
+                        size: 4.8.h,
+                        color: selected.contains(item)
+                            ? Colors.blue
+                            : Colors.white,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    height: 24.h,
+                    padding:
+                        EdgeInsets.symmetric(vertical: 15, horizontal: 3.8.w),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            getCustomFormattedDateTime(
+                                        contest['start_time'], 'dd/yy') ==
+                                    getCustomFormattedDateTime(
+                                        contest['end_time'], 'dd/yy')
+                                ? Text(
+                                    getCustomFormattedDateTime(
+                                        contest['start_time'], 'dd/yyyy'),
+                                    style: TextStyle(
+                                        fontSize: 25.sp,
+                                        fontWeight: FontWeight.bold),
+                                  )
+                                : Text(
+                                    "${getCustomFormattedDateTime(contest['start_time'], 'dd/yyyy')}-${getCustomFormattedDateTime(contest['end_time'], 'dd/yyyy')}",
+                                    style: TextStyle(
+                                        fontSize: 25.sp,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                            getCustomFormattedDateTime(
+                                        contest['start_time'], 'dd/yy') ==
+                                    getCustomFormattedDateTime(
+                                        contest['end_time'], 'dd/yy')
+                                ? Text(
+                                    getCustomFormattedDateTime(
+                                        contest['start_time'], 'MMMM'),
+                                    style: TextStyle(fontSize: 13.7.sp),
+                                  )
+                                : Text(
+                                    "${getCustomFormattedDateTime(contest['start_time'], 'MMMM')}-${getCustomFormattedDateTime(contest['end_time'], 'MMMM')}",
+                                    style: TextStyle(fontSize: 13.7.sp),
+                                  ),
+                          ],
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              contest['name'],
+                              style: TextStyle(
+                                  fontSize: 13.sp,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),
+                            ),
+                            SizedBox(
+                              height: 1.h,
+                            ),
+                            getCustomFormattedDateTime(
+                                        contest['start_time'], 'dd/yy') ==
+                                    getCustomFormattedDateTime(
+                                        contest['end_time'], 'dd/yy')
+                                ? Text(
+                                    "${getCustomFormattedDateTime(contest['start_time'], 'HH:mm')}-${getCustomFormattedDateTime(contest['end_time'], 'HH:mm')}",
+                                    style: TextStyle(fontSize: 13.sp),
+                                  )
+                                : Text(""),
+                          ],
+                        ),
+                        GestureDetector(
+                          behavior: HitTestBehavior.deferToChild,
+                          onTap: () {
+                            _launchInBrowser(contest['url']);
+                          },
+                          child: Text(
+                            "Click here for more info",
+                            style: TextStyle(
+                                fontSize: 10.sp,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.blue),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            );
+          }),
     );
   }
 }
