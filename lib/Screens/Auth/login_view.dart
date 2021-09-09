@@ -37,6 +37,22 @@ class _LoginPageState extends State<LoginPage> with InputValidationMixin {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
+  Future<void> _handleSignIn() async {
+    try {
+      Dio dio = Dio();
+      final result = await _googleSignIn.signIn();
+      final ggAuth = await result?.authentication;
+      var response =
+      await dio.post('http://10.0.2.2:8000/users/auth/google-mobile', data: {
+        'tokenId': ggAuth?.idToken,
+      });
+      Navigator.pushNamed(context, '/dashboard');
+
+    } on DioError catch (e) {
+      print(e);
+    }
+  }
+
   bool agree = false;
   bool _obscureText = true;
 
@@ -348,19 +364,6 @@ class _PreloaderState extends State<Preloader> {
   }
 }
 
-Future<void> _handleSignIn() async {
-  try {
-    Dio dio = Dio();
-    final result = await _googleSignIn.signIn();
-    final ggAuth = await result?.authentication;
-    var response =
-        await dio.post('http://10.0.2.2:8000/users/auth/google', data: {
-      'tokenId': ggAuth?.idToken,
-    });
-  } on DioError catch (e) {
-    print(e);
-  }
-}
 
 Future<void> _handleSignOut() async {
   try {
