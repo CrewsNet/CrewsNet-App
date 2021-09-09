@@ -28,6 +28,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => Contests());
       case '/saved':
         return MaterialPageRoute(builder: (_) => Saved());
+      case '/pagenotfound':
+        return MaterialPageRoute(builder: (_) => PageNotFound());
       default:
         return MaterialPageRoute(builder: (_) => PageNotFound());
     }

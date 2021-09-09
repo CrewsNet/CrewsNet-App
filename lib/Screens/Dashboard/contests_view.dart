@@ -33,7 +33,9 @@ class _ContestsState extends State<Contests> {
     try {
       var response = await Dio()
           .get('https://crewsnet-backend.herokuapp.com/user/contest');
-      contests = response.data["data"];
+      setState(() {
+        contests = response.data["data"];
+      });
     } catch (e) {
       print(e);
     }
@@ -53,7 +55,6 @@ class _ContestsState extends State<Contests> {
   }
 
   Widget build(BuildContext context) {
-    print(contests);
     print(DateTime.now());
     return Scaffold(
       backgroundColor: Colors.black,
