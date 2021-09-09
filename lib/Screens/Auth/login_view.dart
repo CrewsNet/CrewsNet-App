@@ -103,20 +103,24 @@ class _LoginPageState extends State<LoginPage> with InputValidationMixin {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              ElevatedButton(
-                                onPressed: _handleSignIn,
-                                child: Image.asset(
-                                  "assets/images/google.png",
-                                  height: 9.h,
-                                ),
+                              Button(
+                                onPressed: () {
+                                  _handleSignIn();
+                                },
+                                imageUrl: "assets/images/google.png",
+                                height: 9.h,
+                                width: 23.w,
+                                color: Colors.yellow,
                               ),
-                              ElevatedButton(
-                                onPressed: _handleSignOut,
-                                child: Image.asset(
-                                  "assets/images/google.png",
-                                  height: 9.h,
-                                ),
-                              ),
+                              Button(
+                                onPressed: () {
+                                  _handleSignOut();
+                                },
+                                imageUrl: "assets/images/GitHub-Icon.png",
+                                height: 9.h,
+                                width: 23.w,
+                                color: Colors.redAccent,
+                              )
                             ],
                           ),
                         ),
