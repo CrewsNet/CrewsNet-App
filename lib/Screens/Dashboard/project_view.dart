@@ -167,16 +167,7 @@ class Project extends StatelessWidget {
                       ),
                         backgroundColor: Colors.blue[500],
 
-                        // child: Container(
-                        //   decoration: BoxDecoration(
-                        //     image: DecorationImage(
-                        //       image: NetworkImage(
-                        //         "https://static4.depositphotos.com/1015060/482/i/950/depositphotos_4824453-stock-photo-green-park.jpg",
-                        //       ),
-                        //       fit: BoxFit.fitHeight,
-                        //     ),
-                        //   ),
-                        // ),
+
                       ),
                     ),
                   ],
