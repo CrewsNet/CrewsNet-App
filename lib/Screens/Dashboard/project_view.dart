@@ -10,7 +10,7 @@ class Project extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      drawer: DashDrawer(),
+      drawer: DashDrawer(selected: 1,),
       body: CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(

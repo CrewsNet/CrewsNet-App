@@ -22,7 +22,7 @@ class _DashboardState extends State<Dashboard> {
 
     return Scaffold(
       backgroundColor: Colors.black,
-      drawer: DashDrawer(),
+      drawer: DashDrawer(selected: 0,),
       body: CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(

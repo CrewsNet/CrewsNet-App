@@ -4,14 +4,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class DashDrawer extends StatefulWidget {
-  const DashDrawer({Key? key}) : super(key: key);
+class DashDrawer extends StatelessWidget {
+  DashDrawer({Key? key, int? this.selected});
+  int? selected;
 
-  @override
-  _DashDrawerState createState() => _DashDrawerState();
-}
-
-class _DashDrawerState extends State<DashDrawer> {
   List<IconData> icons = [
     Icons.menu,
     FontAwesomeIcons.book,
@@ -80,7 +76,7 @@ class _DashDrawerState extends State<DashDrawer> {
                 itemCount: icons.length,
                 itemBuilder: (BuildContext context, items) {
                   return ListTile(
-                    // selectedTileColor: Colors.,
+                    selected: items==this.selected? true: false,
                     onTap: (){
                       Navigator.of(context).pushNamed(routes[items]);
                     },

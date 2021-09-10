@@ -46,7 +46,7 @@ class _ProfileState extends State<Profile> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      drawer: DashDrawer(),
+      drawer: DashDrawer(selected: 2,),
       body: CustomScrollView(
         scrollDirection: Axis.vertical,
         shrinkWrap: true,

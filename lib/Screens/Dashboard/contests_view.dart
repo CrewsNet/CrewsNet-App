@@ -57,7 +57,7 @@ class _ContestsState extends State<Contests> {
 
     return Scaffold(
       backgroundColor: Colors.black,
-      drawer: DashDrawer(),
+      drawer: DashDrawer(selected: 3,),
       body: CustomScrollView(
         physics: ScrollPhysics(),
         shrinkWrap: true,
