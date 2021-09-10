@@ -349,7 +349,7 @@ class _PreloaderState extends State<Preloader> {
   @override
   void initState() {
     getValidationData().whenComplete(() async {
-      Timer(Duration(seconds: 1), () {
+      Timer(Duration(seconds: 2), () {
         finalEmail == null
             ? Navigator.of(context).push(MaterialPageRoute(
                 builder: (BuildContext context) => LoginPage()))
@@ -362,7 +362,9 @@ class _PreloaderState extends State<Preloader> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(child: CircularProgressIndicator());
+    return Scaffold(
+      backgroundColor: Color.fromARGB(255,19, 18, 18,),
+        body: Center(child: Image.asset("assets/images/loader.gif",colorBlendMode: BlendMode.color,)));
   }
 }
 

@@ -226,7 +226,7 @@ class _ContestsState extends State<Contests> {
                                           fontWeight: FontWeight.bold),
                                     )
                                   : Text(
-                                      "${getCustomFormattedDateTime(contest['start_time'], 'dd/yyyy')}-${getCustomFormattedDateTime(contest['end_time'], 'dd/yyyy')}",
+                                      "${getCustomFormattedDateTime(contest['start_time'], 'dd/yy')}-${getCustomFormattedDateTime(contest['end_time'], 'dd/yy')}",
                                       style: TextStyle(
                                           fontSize: 25.sp,
                                           fontWeight: FontWeight.bold),
