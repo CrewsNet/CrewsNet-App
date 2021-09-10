@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:crews_net_app/constants.dart';
 import 'package:crews_net_app/Utils/auth_validators.dart';
+import 'package:crews_net_app/components/Auth/rounded_button.dart';
 
 class ForgotPassword extends StatefulWidget {
   const ForgotPassword({Key? key}) : super(key: key);
@@ -61,6 +62,17 @@ class _ForgotPasswordState extends State<ForgotPassword>
                 keyboardType: TextInputType.emailAddress,
                 textAlign: TextAlign.center,
                 decoration: AuthTextFieldDecoration,
+              ),
+              SizedBox(
+                height: 2.h,
+              ),
+              Align(
+                alignment: Alignment.center,
+                child: RoundedButton(
+                  color: Colors.blue,
+                  onPressed: () {},
+                  text: "Reset Password",
+                ),
               ),
             ],
           ),
