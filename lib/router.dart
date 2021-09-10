@@ -31,8 +31,6 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => ForgotPassword());
       case '/saved':
         return MaterialPageRoute(builder: (_) => Saved());
-      case '/pagenotfound':
-        return MaterialPageRoute(builder: (_) => PageNotFound());
       default:
         return MaterialPageRoute(builder: (_) => PageNotFound());
     }
