@@ -23,6 +23,7 @@ dependencies:
   flutter_overlay_loader: ^1.0.3
   google_sign_in: ^5.1.0
   url_launcher: ^6.0.10
+  flutter_rating_bar: ^4.0.0
 
 dev_dependencies:
   flutter_test:
