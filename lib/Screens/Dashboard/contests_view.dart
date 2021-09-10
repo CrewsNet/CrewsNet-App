@@ -134,7 +134,6 @@ class _ContestsState extends State<Contests> {
                         padding:EdgeInsets.fromLTRB(0,20.h,0,0),
                         child: Center(
                           child: Container(
-
                             child: CircularProgressIndicator(),
                           ),
                         ),
@@ -202,9 +201,9 @@ class _ContestsState extends State<Contests> {
                     ),
                   ),
                   Container(
-                    height: 24.h,
+                    height: 25.h,
                     padding:
-                        EdgeInsets.symmetric(vertical: 15, horizontal: 3.8.w),
+                        EdgeInsets.symmetric(vertical: 1.h, horizontal: 3.8.w),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -255,9 +254,6 @@ class _ContestsState extends State<Contests> {
                                   fontSize: 13.sp,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.white),
-                            ),
-                            SizedBox(
-                              height: 1.h,
                             ),
                             getCustomFormattedDateTime(
                                         contest['start_time'], 'dd/yy') ==
