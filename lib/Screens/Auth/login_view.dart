@@ -42,12 +42,11 @@ class _LoginPageState extends State<LoginPage> with InputValidationMixin {
       Dio dio = Dio();
       final result = await _googleSignIn.signIn();
       final ggAuth = await result?.authentication;
-      var response =
-      await dio.post('http://10.0.2.2:8000/users/auth/google-mobile', data: {
+      var response = await dio
+          .post('http://10.0.2.2:8000/users/auth/google-mobile', data: {
         'tokenId': ggAuth?.idToken,
       });
       Navigator.pushNamed(context, '/dashboard');
-
     } on DioError catch (e) {
       print(e);
     }
@@ -237,6 +236,9 @@ class _LoginPageState extends State<LoginPage> with InputValidationMixin {
                             ],
                           ),
                           GestureDetector(
+                            onTap: () {
+                              Navigator.pushNamed(context, '/forgot');
+                            },
                             child: Text(
                               "Forgot Password?",
                               style: TextStyle(fontSize: 10.3.sp),
@@ -363,7 +365,6 @@ class _PreloaderState extends State<Preloader> {
     return Center(child: CircularProgressIndicator());
   }
 }
-
 
 Future<void> _handleSignOut() async {
   try {

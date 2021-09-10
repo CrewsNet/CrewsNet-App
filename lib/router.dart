@@ -9,6 +9,7 @@ import 'Screens/Dashboard/profile_view.dart';
 import 'Screens/Dashboard/project_view.dart';
 import 'Screens/Dashboard/saved_view.dart';
 import 'Screens/PageNotFound.dart';
+import 'package:crews_net_app/Screens/Auth/forgotPassword.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -26,6 +27,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => Profile());
       case '/contests':
         return MaterialPageRoute(builder: (_) => Contests());
+      case '/forgot':
+        return MaterialPageRoute(builder: (_) => ForgotPassword());
       case '/saved':
         return MaterialPageRoute(builder: (_) => Saved());
       default:
