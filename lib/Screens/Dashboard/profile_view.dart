@@ -110,47 +110,47 @@ class _ProfileState extends State<Profile> with SingleTickerProviderStateMixin {
                         onPressed: () {},
                         iconSize: 22.sp,
                       ),
-                    )
+                    ),
                   ]),
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(0, 2.h, 0, 0),
-                    child: Text(
-                      ' $_rating',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20.sp,
-                        color: Colors.green[500],
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(0, 1.h, 0, 0),
-                    child: RatingBar.builder(
-                      initialRating: 3,
-                      minRating: 1,
-                      direction: Axis.horizontal,
-                      allowHalfRating: true,
-                      glowColor: Colors.amber,
-                      glow: true,
-                      glowRadius: 25.sp,
-                      unratedColor: Colors.green[50],
-                      itemCount: 5,
-                      itemSize: 22.sp,
-                      itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-                      itemBuilder: (context, _) => Icon(
-                        Icons.star,
-                        color: Colors.green[500],
-                      ),
-                      onRatingUpdate: (rating) {
-                        setState(
-                          () {
-                            _rating = rating;
-                          },
-                        );
-                      },
-                      updateOnDrag: true,
-                    ),
-                  ),
+                  // Padding(
+                  //   padding: EdgeInsets.fromLTRB(0, 2.h, 0, 0),
+                  //   child: Text(
+                  //     ' $_rating',
+                  //     style: TextStyle(
+                  //       fontWeight: FontWeight.bold,
+                  //       fontSize: 20.sp,
+                  //       color: Colors.green[500],
+                  //     ),
+                  //   ),
+                  // ),
+                  // Padding(
+                  //   padding: EdgeInsets.fromLTRB(0, 1.h, 0, 0),
+                  //   child: RatingBar.builder(
+                  //     initialRating: 3,
+                  //     minRating: 1,
+                  //     direction: Axis.horizontal,
+                  //     allowHalfRating: true,
+                  //     glowColor: Colors.amber,
+                  //     glow: true,
+                  //     glowRadius: 25.sp,
+                  //     unratedColor: Colors.green[50],
+                  //     itemCount: 5,
+                  //     itemSize: 22.sp,
+                  //     itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                  //     itemBuilder: (context, _) => Icon(
+                  //       Icons.star,
+                  //       color: Colors.green[500],
+                  //     ),
+                  //     onRatingUpdate: (rating) {
+                  //       setState(
+                  //         () {
+                  //           _rating = rating;
+                  //         },
+                  //       );
+                  //     },
+                  //     updateOnDrag: true,
+                  //   ),
+                  // ),
                   Container(
                     height: 25.h,
                     child: Column(
