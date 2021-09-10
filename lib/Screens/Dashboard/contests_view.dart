@@ -181,7 +181,7 @@ class _ContestsState extends State<Contests> {
                   children: [
                     Positioned(
                       right: 3.8.w,
-                      bottom: selected.contains(item) ? 19.h : 20.5.h,
+                      bottom: selected.contains(item) ? 20.h : 21.5.h,
                       child: IconButton(
                         onPressed: () {
                           setState(() {
@@ -197,7 +197,7 @@ class _ContestsState extends State<Contests> {
                               : FontAwesomeIcons.bookmark,
                           size: 4.8.h,
                           color: selected.contains(item)
-                              ? Colors.blue
+                              ? Colors.purple
                               : Colors.white,
                         ),
                       ),
