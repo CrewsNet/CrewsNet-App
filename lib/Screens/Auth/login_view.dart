@@ -86,7 +86,7 @@ class _LoginPageState extends State<LoginPage> with InputValidationMixin {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "CrewsNET",
+                        "CrewsNet",
                         style: TextStyle(
                             fontSize: 30.5.sp, fontWeight: FontWeight.bold),
                       ),
