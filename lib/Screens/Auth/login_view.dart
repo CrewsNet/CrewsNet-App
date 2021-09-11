@@ -363,8 +363,17 @@ class _PreloaderState extends State<Preloader> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255,19, 18, 18,),
-        body: Center(child: Image.asset("assets/images/loader.gif",colorBlendMode: BlendMode.color,)));
+        backgroundColor: Color.fromARGB(
+          255,
+          19,
+          18,
+          18,
+        ),
+        body: Center(
+            child: Image.asset(
+          "assets/images/loader.gif",
+          colorBlendMode: BlendMode.color,
+        )));
   }
 }
 
