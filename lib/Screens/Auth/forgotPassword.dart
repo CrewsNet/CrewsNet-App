@@ -1,4 +1,8 @@
+import 'dart:convert';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 import 'package:sizer/sizer.dart';
 import 'package:crews_net_app/constants.dart';
 import 'package:crews_net_app/Utils/auth_validators.dart';
@@ -13,6 +17,7 @@ class ForgotPassword extends StatefulWidget {
 
 class _ForgotPasswordState extends State<ForgotPassword>
     with InputValidationMixin {
+  Dio dio = Dio();
   final emailController = TextEditingController();
 
   @override
@@ -70,7 +75,37 @@ class _ForgotPasswordState extends State<ForgotPassword>
                 alignment: Alignment.center,
                 child: RoundedButton(
                   color: Colors.blue,
-                  onPressed: () {},
+                  onPressed: () async {
+                    try {
+                      Loader.show(
+                        context,
+                        progressIndicator: CircularProgressIndicator(),
+                      );
+                      var response = await dio.post(
+                        'http://10.0.2.2:8000/users/forgotPassword',
+                        data: {
+                          'email': emailController.value.text,
+                        },
+                      );
+                      Loader.hide();
+                      print(response.statusCode);
+                      if (response.statusCode == 200) {
+                        Navigator.of(context).pushNamed('/');
+                      }
+                    } on DioError catch (e) {
+                      final error = json.decode(e.response.toString());
+                      Loader.hide();
+                      final snackBar = SnackBar(
+                        backgroundColor: Colors.lightBlue,
+                        duration: Duration(seconds: 8),
+                        content: Text(
+                          error['message'],
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      );
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    }
+                  },
                   text: "Reset Password",
                 ),
               ),
