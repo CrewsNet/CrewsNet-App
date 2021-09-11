@@ -42,7 +42,7 @@ class _SignUpPageState extends State<SignUpPage> with InputValidationMixin {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Text(
-                        "CrewsNET",
+                        "CrewsNet",
                         style: TextStyle(
                             fontSize: 30.5.sp, fontWeight: FontWeight.bold),
                       ),
@@ -76,7 +76,7 @@ class _SignUpPageState extends State<SignUpPage> with InputValidationMixin {
                             children: [
                               Button(
                                 onPressed: () {
-                                  print("HELEL");
+
                                 },
                                 imageUrl: "assets/images/google.png",
                                 height: 9.h,
@@ -85,7 +85,7 @@ class _SignUpPageState extends State<SignUpPage> with InputValidationMixin {
                               ),
                               Button(
                                 onPressed: () {
-                                  print("HELEL");
+
                                 },
                                 imageUrl: "assets/images/GitHub-Icon.png",
                                 height: 9.h,
