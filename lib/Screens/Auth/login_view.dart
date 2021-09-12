@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-
 import 'package:crews_net_app/Screens/Dashboard/dashboard_view.dart';
 import 'package:crews_net_app/Utils/auth_validators.dart';
 import 'package:crews_net_app/components/Auth/Button.dart';
@@ -85,126 +84,16 @@ class _LoginPageState extends State<LoginPage> with InputValidationMixin {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        "CrewsNet",
-                        style: TextStyle(
-                            fontSize: 30.5.sp, fontWeight: FontWeight.bold),
+                      UpperAuth(
+                        pageType: "Log In",
+                        Usertext: "Log In with Email",
                       ),
-                      SizedBox(
-                        height: 1.2.h,
-                      ),
-                      Text(
-                        "Log In",
-                        style: TextStyle(
-                            fontSize: 23.sp, fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(
-                        height: 1.2.h,
-                      ),
-                      Text(
-                        "Get connected with the world of projects",
-                        style: TextStyle(fontSize: 11.45.sp),
-                      ),
-                      SizedBox(
-                        height: 1.2.h,
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(3.5.h),
-                          color: Color.fromRGBO(71, 71, 71, 1),
-                        ),
-                        child: Padding(
-                          padding: EdgeInsets.all(1.w),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Button(
-                                onPressed: () {
-                                  _handleSignIn();
-                                },
-                                imageUrl: "assets/images/google.png",
-                                height: 9.h,
-                                width: 23.w,
-                                color: Colors.yellow,
-                              ),
-                              Button(
-                                onPressed: () {
-                                  _handleSignOut();
-                                },
-                                imageUrl: "assets/images/GitHub-Icon.png",
-                                height: 9.h,
-                                width: 23.w,
-                                color: Colors.redAccent,
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 1.2.h,
-                      ),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Divider(
-                              color: Colors.white,
-                              thickness: 0.4.w,
-                            ),
-                          ),
-                          Text(
-                            " Log in with Email ",
-                            style: TextStyle(fontSize: 13.sp),
-                          ),
-                          Expanded(
-                            child: Divider(
-                              color: Colors.white,
-                              thickness: 0.4.w,
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 2.5.h,
-                      ),
-                      TextFormField(
-                        validator: (email) {
-                          if (isEmailValid(email!))
-                            return null;
-                          else
-                            return 'Enter a valid email address';
-                        },
-                        controller: emailController,
-                        keyboardType: TextInputType.emailAddress,
-                        textAlign: TextAlign.center,
-                        decoration: AuthTextFieldDecoration,
-                      ),
-                      SizedBox(
-                        height: 1.2.h,
-                      ),
-                      TextFormField(
-                        validator: (password) {
-                          if (isPasswordValid(password!))
-                            return null;
-                          else
-                            return 'Enter a valid password';
-                        },
-                        controller: passwordController,
+                      Validation(
                         obscureText: _obscureText,
-                        textAlign: TextAlign.center,
-                        decoration: AuthTextFieldDecoration.copyWith(
-                          labelText: "Password",
-                          hintText: "Enter your Password",
-                          suffixIcon: IconButton(
-                            icon: Icon(_obscureText
-                                ? Icons.visibility_off
-                                : Icons.visibility),
-                            onPressed: () {
-                              setState(() {
-                                _obscureText = !_obscureText;
-                              });
-                            },
-                          ),
-                        ),
+                        emailController: emailController,
+                        isNameField: false,
+                        nameController: null,
+                        passwordController: passwordController,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -292,32 +181,7 @@ class _LoginPageState extends State<LoginPage> with InputValidationMixin {
                           text: "LOG IN",
                         ),
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "Don't have an account? ",
-                            style: TextStyle(fontSize: 11.sp),
-                          ),
-                          GestureDetector(
-                              onTap: () {
-                                Navigator.pushNamed(context, '/signup');
-                              },
-                              child: Text(
-                                "Sign Up",
-                                style: TextStyle(
-                                    color: Colors.lightBlueAccent,
-                                    fontSize: 11.sp),
-                              )),
-                        ],
-                      ),
-                      Align(
-                        alignment: Alignment.center,
-                        child: Text(
-                          "©2021 CrewsNet All rights reserved.",
-                          style: TextStyle(fontSize: 8.sp),
-                        ),
-                      ),
+                      AuthBottom(context: context, NothavingAccount: true),
                     ],
                   ),
                 ),
@@ -326,6 +190,96 @@ class _LoginPageState extends State<LoginPage> with InputValidationMixin {
           ),
         ),
       ),
+    );
+  }
+
+
+  Widget UpperAuth(
+      {String? pageType,
+      String? Usertext,
+      Function? SignIn,
+      Function? SignOut}) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "CrewsNet",
+          style: TextStyle(fontSize: 30.5.sp, fontWeight: FontWeight.bold),
+        ),
+        SizedBox(
+          height: 2.h,
+        ),
+        Text(
+          pageType.toString(),
+          style: TextStyle(fontSize: 23.sp, fontWeight: FontWeight.bold),
+        ),
+        SizedBox(
+          height: 2.h,
+        ),
+        Text(
+          "Get connected with the world of projects",
+          style: TextStyle(fontSize: 11.45.sp),
+        ),
+        SizedBox(
+          height: 2.h,
+        ),
+        Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(3.5.h),
+            color: Color.fromRGBO(71, 71, 71, 1),
+          ),
+          child: Padding(
+            padding: EdgeInsets.all(1.w),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Button(
+                  onPressed: () {
+                    _handleSignIn();
+                  },
+                  imageUrl: "assets/images/google.png",
+                  height: 9.h,
+                  width: 23.w,
+                  color: Colors.yellow,
+                ),
+                Button(
+                  onPressed: () {
+                    _handleSignOut();
+                  },
+                  imageUrl: "assets/images/GitHub-Icon.png",
+                  height: 9.h,
+                  width: 23.w,
+                  color: Colors.redAccent,
+                )
+              ],
+            ),
+          ),
+        ),
+        SizedBox(
+          height: 2.h,
+        ),
+        Row(
+          children: [
+            Expanded(
+              child: Divider(
+                color: Colors.white,
+                thickness: 0.4.w,
+              ),
+            ),
+            Text(
+              Usertext.toString(),
+              style: TextStyle(fontSize: 13.sp),
+            ),
+            Expanded(
+              child: Divider(
+                color: Colors.white,
+                thickness: 0.4.w,
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }
@@ -384,3 +338,4 @@ Future<void> _handleSignOut() async {
     print(e);
   }
 }
+
